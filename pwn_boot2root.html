@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>PWN · Binary Exploitation + Boot2Root Attack Chain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 10%, #0a0c12, #010101);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 50, 100, 0.4);
+            padding-bottom: 2rem;
+        }
+
+        .pwn-badge {
+            display: inline-block;
+            background: rgba(255, 30, 80, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid #ff3a6f;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ff7c9e;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #ff7c9e, #ff3a6f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbdff2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #ff3a6f;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 60, 110, 0.35);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ff3a6f;
+            box-shadow: 0 20px 30px -12px rgba(255, 40, 80, 0.3);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "💣";
+            position: absolute;
+            left: 0;
+            color: #ff7c9e;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(255, 60, 110, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #6e2e46;
+            color: #ffb8cc;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #ff3a6f;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #1e1218;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #ffb8cc;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #ffe0e6, #ff7c9e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff3a6f, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(255, 60, 110, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #ff7c9e;
+            font-weight: 500;
+        }
+
+        .attack-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+            background: #0e1622;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="pwn-badge">💣 PWN · BINARY EXPLOITATION + BOOT2ROOT</div>
+        <h1>Memory Corruption · ROP · Heap<br>Full Pentest Machine Chain</h1>
+        <p>From stack overflows to root shells — complete attack chain: recon → exploit → privilege escalation → flags.</p>
+        <div class="pillars">
+            <span class="pill">⚔️ Binary Exploitation Core</span>
+            <span class="pill">🚀 Boot2Root Methodology</span>
+            <span class="pill">🏁 Practice Platforms</span>
+        </div>
+    </div>
+
+    <!-- Three Main Sections Grid -->
+    <div class="grid-3col">
+        <!-- Binary Exploitation Core -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>⚔️</span> Binary Exploitation Core</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Stack buffer overflows, return-to-libc, ROP chain construction</li>
+                    <li>Format string vulnerabilities (arbitrary read/write)</li>
+                    <li>Heap exploitation: use-after-free, tcache poisoning, fastbin dup</li>
+                    <li>ASLR & NX bypass, PIE, canary leaks</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">pwntools</span>
+                    <span class="tool">GDB/pwndbg</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boot2Root Full Methodology -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🚀</span> Boot2Root Methodology</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Phase1 Recon: Nmap, dirbusting, service enumeration</li>
+                    <li>Phase2 Exploitation: web app exploit, reverse shell, foothold</li>
+                    <li>Phase3 Privilege Escalation: SUID, sudo -l, cron jobs, kernel exploits</li>
+                    <li>Phase4 Post-exploit: persistence, lateral movement, flags</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">LinPEAS</span>
+                    <span class="tool">WinPEAS</span>
+                    <span class="tool">Metasploit</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Platforms -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🏁</span> Practice Platforms</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>VulnHub (Boot2Root VMs), Hack The Box (Starting Point → Pro Labs)</li>
+                    <li>TryHackMe (Offensive Pentesting, Wreath)</li>
+                    <li>Pwnable.tw, PwnableKr, CTF pwn challenges</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">HTB</span>
+                    <span class="tool">THM</span>
+                    <span class="tool">PwnableKr</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: Binary Exploitation Techniques -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">⚙️</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">Exploitation Primitives & Bypasses</span>
+        </div>
+        <div class="attack-flow" style="margin: 1rem 0;">
+            <span>🔹 Stack buffer overflow</span> <span>→</span>
+            <span>🔹 ROP chain (ret2libc, ret2syscall)</span> <span>→</span>
+            <span>🔹 Canary leak (printf, off-by-one)</span> <span>→</span>
+            <span>🔹 PIE bypass (partial overwrite, info leak)</span>
+        </div>
+        <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <span class="method-badge">🔧 Format string: arbitrary read/write via %p, %n</span>
+            <span class="method-badge">🧠 Heap: UAF -> tcache poisoning -> __free_hook</span>
+            <span class="method-badge">🛡️ ret2dlresolve (no leak exploitation)</span>
+            <span class="method-badge">📦 Shellcode + mprotect (RWX) via ROP</span>
+        </div>
+        <div class="tools-tag" style="margin-top: 1rem;">
+            <span class="tool">pwntools cyclic</span>
+            <span class="tool">ROPgadget</span>
+            <span class="tool">one_gadget</span>
+            <span class="tool">LibcSearcher</span>
+        </div>
+        <div class="warning-note" style="background: #0e161c; border-radius: 1rem; padding: 0.8rem; margin-top: 1rem;">
+            💡 <span class="highlight">pwntools workflow:</span> `p = process('./vuln')` → `cyclic_find()` → `elf.symbols['win']` → `p.sendline(payload)` → GDB attach with `gdb.attach(p, 'b *main')`
+        </div>
+    </div>
+
+    <!-- Boot2Root Attack Chain Deep Dive -->
+    <div>
+        <span class="section-title">🚀 Boot2Root — Full Attack Chain</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📡 Phase 1: Recon</strong>
+                <div style="font-size: 0.8rem;">nmap -sC -sV target | dirb/gobuster | whatweb | enum4linux</div>
+                <div class="tools-tag" style="margin-top: 0.4rem;"><span class="tool">nmap</span><span class="tool">gobuster</span></div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">⚡ Phase 2: Exploitation</strong>
+                <div style="font-size: 0.8rem;">Web app exploit (RCE, LFI, SQLi), reverse shell (nc, python -c 'import pty...'), meterpreter</div>
+                <div class="tools-tag" style="margin-top: 0.4rem;"><span class="tool">Metasploit</span><span class="tool">Burp Suite</span></div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔑 Phase 3: Privilege Escalation</strong>
+                <div style="font-size: 0.8rem;">LinPEAS, sudo -l, SUID binaries (GTFOBins), cron jobs, kernel exploit (Dirty Pipe, CVE-2021-3156)</div>
+                <div class="tools-tag" style="margin-top: 0.4rem;"><span class="tool">LinPEAS</span><span class="tool">pspy</span></div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🏁 Phase 4: Post-Exploit & Flags</strong>
+                <div style="font-size: 0.8rem;">Persistence (SSH keys, cron), lateral movement (pivoting), dump flags, root.txt proof</div>
+                <div class="tools-tag" style="margin-top: 0.4rem;"><span class="tool">chisel</span><span class="tool">sshuttle</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privilege Escalation Vectors Matrix -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🐧 Linux Privilege Escalation</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ <span class="highlight">SUID Binaries:</span> find / -perm -4000 2>/dev/null (GTFOBins)</li>
+                <li>→ <span class="highlight">sudo -l:</span> misconfigured sudoers (CVE-2021-3156, env_keep)</li>
+                <li>→ <span class="highlight">Cron jobs:</span> writable scripts, wildcard injection (tar --checkpoint)</li>
+                <li>→ <span class="highlight">Kernel exploits:</span> Dirty Pipe (CVE-2022-0847), Dirty Cow, PwnKit</li>
+                <li>→ <span class="highlight">Docker/LXC:</span> socket mount, cgroup escape</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;"><span class="tool">LinEnum</span><span class="tool">linux-exploit-suggester</span></div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🪟 Windows Privilege Escalation</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ <span class="highlight">UAC Bypass:</span> fodhelper, eventvwr, CMSTP</li>
+                <li>→ <span class="highlight">Service misconfig:</span> unquoted paths, weak permissions</li>
+                <li>→ <span class="highlight">AlwaysInstallElevated:</span> MSI installer as SYSTEM</li>
+                <li>→ <span class="highlight">Token impersonation:</span> JuicyPotato, PrintSpoofer, RoguePotato</li>
+                <li>→ <span class="highlight">Scheduled tasks:</span> writable batch files, DLL hijacking</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;"><span class="tool">WinPEAS</span><span class="tool">PowerUp.ps1</span></div>
+        </div>
+    </div>
+
+    <!-- ROP + Return Oriented Programming Workshop -->
+    <div class="deep-section" style="background: #0a131f;">
+        <h3 style="margin-bottom: 1rem;">🔧 ROP Chain Construction — Modern Binary Exploitation</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem;">
+            <div>
+                <span class="highlight">📦 ROP Gadget Types</span>
+                <div style="font-size: 0.85rem;">pop rdi; ret | mov [rax], rdx; ret | syscall; ret</div>
+            </div>
+            <div>
+                <span class="highlight">🧰 ret2libc (No PIE)</span>
+                <div style="font-size: 0.85rem">leak libc address → calculate system() → /bin/sh</div>
+            </div>
+            <div>
+                <span class="highlight">🔄 ret2csu (__libc_csu_init)</span>
+                <div style="font-size: 0.85rem">call chains without full libc leak</div>
+            </div>
+            <div>
+                <span class="highlight">📜 SROP (Sigreturn)</span>
+                <div style="font-size: 0.85rem">sigreturn syscall → set registers → execve</div>
+            </div>
+        </div>
+        <hr>
+        <div><span class="tool">ROPgadget --binary ./vuln | grep "pop rdi"</span> <span class="tool">ropper</span></div>
+    </div>
+
+    <!-- Practice Platforms & Labs Showcase -->
+    <div style="margin: 2rem 0;">
+        <span class="section-title">🏁 Boot2Root & Pwn Labs — Where to Practice</span>
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start;">
+                <span class="method-badge">🎯 VulnHub: Mr-Robot, Brainpan, Kioptrix, FristiLeaks</span>
+                <span class="method-badge">⚡ HTB: Starting Point → Machines (Bashed, Lame, Legacy) → Pro Labs</span>
+                <span class="method-badge">🛡️ TryHackMe: Wreath, Offensive Pentesting, Buffer Overflow Prep</span>
+                <span class="method-badge">🧩 Pwnable.tw: start, orw, tcache, silver_bullet</span>
+                <span class="method-badge">🐧 PwnableKr: fd, collision, bof, uaf, memcpy, simple login</span>
+            </div>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">pwninit</span>
+                <span class="tool">checksec</span>
+                <span class="tool">gef</span>
+                <span class="tool">radare2</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exploit Development Workflow -->
+    <div class="deep-section" style="background: #0a111c;">
+        <span style="font-weight: 800; font-size: 1.2rem;">🔬 Exploit Development Lifecycle (pwn challenge)</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 0.6rem; margin-top: 1rem;">
+            <div><span class="highlight">1. Reverse</span> — analyze with Ghidra/IDA</div>
+            <div><span class="highlight">2. Fuzz</span> — find crash offset</div>
+            <div><span class="highlight">3. Leak</span> — canary, libc, PIE base</div>
+            <div><span class="highlight">4. Build ROP</span> — gadgets, chain</div>
+            <div><span class="highlight">5. Exploit</span> — local → remote shell</div>
+            <div><span class="highlight">6. Automate</span> — pwntools script</div>
+        </div>
+        <div class="warning-note" style="margin-top: 1rem;">
+            🧠 <span class="highlight">pwntools template:</span> `from pwn import *; context.binary = './chall'; p = remote('target', 1337); payload = b'A'*offset + p64(win_addr); p.sendline(payload); p.interactive()`
+        </div>
+    </div>
+
+    <!-- Ethical & Authorization Note -->
+    <div style="background: rgba(255, 60, 110, 0.12); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">⚖️</span>
+            <span><strong class="highlight">Authorized Testing Only</strong> — Binary exploitation and boot2root techniques must only be applied on systems you own, CTF platforms, or explicit written permission. Unauthorized exploitation is illegal.</span>
+        </p>
+    </div>
+
+    <!-- Boot2Root Complete Mindmap -->
+    <div style="text-align: center; background: linear-gradient(145deg, #0a0f1a, #02070e); border-radius: 2rem; padding: 1.5rem; margin-top: 1rem;">
+        <span style="font-weight: 700;">💣 Boot2Root Attack Chain: Recon → Enumerate → Exploit → Privesc → Root Flag</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">Tools: nmap · gobuster · msfconsole · LinPEAS · pwntools · ROPgadget</div>
+    </div>
+
+    <footer>
+        💣 PWN (Binary Exploitation) + Boot2Root — Memory corruption, ROP chains, heap exploitation, full pentest methodology from recon to root.<br>
+        Break binaries, compromise machines, own the flag.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c💣 PWN + Boot2Root Module Loaded", "color: #ff7c9e; font-size: 14px; font-weight: bold;");
+        console.log("%cBinary Exploitation · ROP · Heap · Boot2Root Attack Chain · Privilege Escalation", "color: #ffb8cc;");
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Core Domains | Ethical Hacking · CTF · Bug Bounty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 80% 10%, #0a0c12, #020408);
+            font-family: 'Inter', sans-serif;
+            color: #edf4ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* header + blade style */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 80, 40, 0.3);
+            padding-bottom: 2rem;
+        }
+
+        .domain-badge {
+            display: inline-block;
+            background: rgba(255, 70, 40, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 80, 40, 0.5);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ff9f7c;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #ffaa7a, #ff5e3a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #b9cfed;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .pillar-tag {
+            background: #11161f;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-left: 2px solid #ff5e3a;
+        }
+
+        /* card grid */
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 22, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 90, 50, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 94, 58, 0.7);
+            box-shadow: 0 20px 30px -12px rgba(255, 70, 0, 0.2);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .kill-chain {
+            list-style: none;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .kill-chain li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #dee9fc;
+        }
+
+        .kill-chain li::before {
+            content: "⚔️";
+            position: absolute;
+            left: 0;
+            color: #ff7e5e;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.3rem;
+            border-top: 1px dashed rgba(255, 94, 58, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #482e26;
+            color: #ffc6b0;
+        }
+
+        .ctf-badge {
+            display: inline-flex;
+            background: #24100c;
+            border-radius: 20px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 0.6rem;
+            margin-bottom: 0.4rem;
+            color: #ffac8a;
+        }
+
+        .insight-block {
+            background: #0a0f18;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #ff5e3a;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .method-card {
+            background: #0e141f;
+            border-radius: 1rem;
+            padding: 0.9rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #ffcfb5, #ff8c6e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff5e3a, transparent);
+            margin: 1rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6a7f9e;
+            border-top: 1px solid rgba(255, 94, 58, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #ff8f6e;
+            font-weight: 500;
+        }
+
+        .chain-progress {
+            background: #0f1a1f;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="domain-badge">⚔️ CORE CYBERSECURITY DOMAINS</div>
+        <h1>Ethical Hacking · CTF · Bug Bounty</h1>
+        <p>The pillars of offensive & defensive skills — full kill chain, competition mindset, and professional bug hunting.</p>
+        <div class="pillars">
+            <span class="pillar-tag">🕵️ Full Kill Chain</span>
+            <span class="pillar-tag">🎯 CTF Categories</span>
+            <span class="pillar-tag">📄 Bug Bounty Methodology</span>
+            <span class="pillar-tag">⚡ Red Teaming mindset</span>
+        </div>
+    </div>
+
+    <!-- Two main domain cards -->
+    <div class="domains-grid">
+        <!-- Ethical Hacking (Full Kill Chain) -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🕵️</span> Ethical Hacking<br><span style="font-size: 0.9rem;">Full Kill Chain</span></h2>
+            </div>
+            <div class="card-content">
+                <ul class="kill-chain">
+                    <li>Reconnaissance (passive/active), OSINT + DNS enumeration</li>
+                    <li>Scanning & enumeration: Nmap, masscan, service versioning</li>
+                    <li>Vulnerability assessment (Nessus, OpenVAS)</li>
+                    <li>Exploitation (Metasploit, manual exploits)</li>
+                    <li>Post-exploitation: persistence, pivoting, data exfiltration</li>
+                    <li>Privilege escalation (Linux: SUID, sudo, cron; Windows: UAC bypass)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Metasploit</span>
+                    <span class="tool">Nmap</span>
+                    <span class="tool">Burp Suite</span>
+                    <span class="tool">Nessus</span>
+                    <span class="tool">OpenVAS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTF & Bug Bounty -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🎯</span> CTF & Bug Bounty</h2>
+            </div>
+            <div class="card-content">
+                <ul class="kill-chain">
+                    <li>CTF categories: Web, Pwn, Reverse, Crypto, Forensics, OSINT</li>
+                    <li>Bug bounty methodology: reconnaissance, attack surface mapping</li>
+                    <li>Writing professional reports, PoC, responsible disclosure</li>
+                    <li>Tools for automation: nuclei, ffuf, gospider, subfinder</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Burp Suite</span>
+                    <span class="tool">FFUF</span>
+                    <span class="tool">Nuclei</span>
+                    <span class="tool">Subfinder</span>
+                    <span class="tool">Gospider</span>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <span class="ctf-badge">🏆 Web</span>
+                    <span class="ctf-badge">🐧 Pwn</span>
+                    <span class="ctf-badge">🔁 Reverse</span>
+                    <span class="ctf-badge">🔐 Crypto</span>
+                    <span class="ctf-badge">🕵️ Forensics</span>
+                    <span class="ctf-badge">🌍 OSINT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- deep-dive: kill chain visualization & methodology -->
+    <div class="insight-block">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
+            <span style="font-size: 2rem;">⚔️</span>
+            <span style="font-weight: 700; font-size: 1.3rem;">Ethical Hacking — Full Attack Cycle</span>
+        </div>
+        <div class="chain-progress" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem;">
+            <span>📡 Recon</span> <span style="color:#ff8f6e;">→</span>
+            <span>🔍 Scanning</span> <span style="color:#ff8f6e;">→</span>
+            <span>⚠️ Vuln Assessment</span> <span style="color:#ff8f6e;">→</span>
+            <span>💥 Exploitation</span> <span style="color:#ff8f6e;">→</span>
+            <span>🕯️ Post-Exploit</span> <span style="color:#ff8f6e;">→</span>
+            <span>📈 PrivEsc</span>
+        </div>
+        <div style="margin-top: 1rem; font-size: 0.9rem; color: #bdd4ff;">
+            🧠 <span class="highlight">Pro tip:</span> Master each phase before moving to the next. Real-world red teaming requires stealth, adaptability, and deep knowledge of Windows/Linux internals.
+        </div>
+    </div>
+
+    <!-- CTF & bounty methodology expansion -->
+    <div>
+        <span class="section-title">🎯 CTF & Bug Bounty Playbook</span>
+        <div class="methodology-grid" style="margin-top: 1.2rem;">
+            <div class="method-card">
+                <div style="font-size: 1.5rem;">📡</div>
+                <strong>Recon & OSINT</strong>
+                <div style="font-size: 0.75rem; margin-top: 5px;">subfinder, amass, gospider, Shodan</div>
+            </div>
+            <div class="method-card">
+                <div style="font-size: 1.5rem;">🎯</div>
+                <strong>Attack Surface</strong>
+                <div style="font-size: 0.75rem; margin-top: 5px;">ffuf, nuclei, dirsearch, parameter discovery</div>
+            </div>
+            <div class="method-card">
+                <div style="font-size: 1.5rem;">🐞</div>
+                <strong>Exploitation</strong>
+                <div style="font-size: 0.75rem; margin-top: 5px;">SQLi, XSS, SSTI, IDOR, race conditions</div>
+            </div>
+            <div class="method-card">
+                <div style="font-size: 1.5rem;">📄</div>
+                <strong>Report & PoC</strong>
+                <div style="font-size: 0.75rem; margin-top: 5px;">Professional write-ups, video PoC, CVSS scoring</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tools arsenal table style (clean) -->
+    <div style="background: rgba(0,0,0,0.4); border-radius: 1.8rem; padding: 1.5rem; margin: 2rem 0;">
+        <h3 style="display: flex; align-items: center; gap: 8px;">🧰 Essential Arsenal — Offensive & Automation</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+            <div style="flex: 1; min-width: 150px;">
+                <ul style="list-style: none;">
+                    <li>🔹 <span class="highlight">Nmap</span> / masscan</li>
+                    <li>🔹 <span class="highlight">Metasploit</span> framework</li>
+                    <li>🔹 <span class="highlight">Burp Suite</span> Pro/Community</li>
+                    <li>🔹 <span class="highlight">Nessus</span> / OpenVAS</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <ul style="list-style: none;">
+                    <li>🔹 <span class="highlight">ffuf</span> + wordlists</li>
+                    <li>🔹 <span class="highlight">nuclei</span> template engine</li>
+                    <li>🔹 <span class="highlight">subfinder</span> + gospider</li>
+                    <li>🔹 <span class="highlight">BloodHound</span> (AD privesc)</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <ul style="list-style: none;">
+                    <li>🔹 <span class="highlight">Impacket</span> / CrackMapExec</li>
+                    <li>🔹 <span class="highlight">Mimikatz</span> / PowerSploit</li>
+                    <li>🔹 <span class="highlight">John</span> / hashcat</li>
+                    <li>🔹 <span class="highlight">Wireshark</span> / tcpdump</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div style="font-size: 0.85rem; margin-top: 0.8rem;">⚡ <strong>Bug bounty workflow:</strong> recon → subdomain enumeration → screenshot/tech detection → nuclei templates → manual verification → report.</div>
+    </div>
+
+    <!-- CTF categories deep dive + mindset -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1.5; background: #071017; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.5rem; font-weight: 700;">🏁 CTF Categories — Master them all</span>
+            <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.8rem;">
+                <div><span class="tool" style="background:#2a1a15;">🌐 Web: XSS, SQLi, SSRF, JWT</span></div>
+                <div><span class="tool" style="background:#2a1a15;">🐧 Pwn: buffer overflow, ROP chains</span></div>
+                <div><span class="tool" style="background:#2a1a15;">🔁 Reverse: Ghidra, radare2, angr</span></div>
+                <div><span class="tool" style="background:#2a1a15;">🔐 Crypto: RSA, AES, hashes, side-channel</span></div>
+                <div><span class="tool" style="background:#2a1a15;">🕵️ Forensics: memory dumps, stego, PCAPs</span></div>
+                <div><span class="tool" style="background:#2a1a15;">🌍 OSINT: metadata, social media, breach data</span></div>
+            </div>
+            <div class="insight-block" style="margin-top: 1.2rem; background: #0b111c;">
+                💡 CTF tip: Build your own toolkit — pwntools for pwn, Burp for web, volatility for forensics. Collaboration + structured thinking wins flags.
+            </div>
+        </div>
+        <div style="flex: 1; background: #0f1620; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.5rem; font-weight: 700;">📝 Responsible Disclosure</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>✓ Clear & concise report</li>
+                <li>✓ Step-by-step PoC (video/text)</li>
+                <li>✓ Impact assessment + CVSS</li>
+                <li>✓ Remediation suggestions</li>
+                <li>✓ Follow platform guidelines (HackerOne, Bugcrowd)</li>
+            </ul>
+            <div class="tools-tag" style="border-top-color: #ff7e5e; margin-top: 1rem;">
+                <span class="tool">HackerOne</span>
+                <span class="tool">Bugcrowd</span>
+                <span class="tool">Intigriti</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- privilege escalation matrix / windows & linux -->
+    <div class="insight-block" style="background: #0b111e;">
+        <h3 style="display: flex; gap: 8px; align-items: center;">👑 Privilege Escalation Deep Dive (Linux & Windows)</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem; margin-top: 1rem;">
+            <div>
+                <strong class="highlight">🐧 Linux Privesc</strong>
+                <ul style="margin-top: 0.4rem;">
+                    <li>SUID binaries (GTFOBins)</li>
+                    <li>Sudo misconfigurations</li>
+                    <li>Cron jobs / wildcard injection</li>
+                    <li>Kernel exploits (Dirty Pipe)</li>
+                    <li>Capabilities & Docker groups</li>
+                </ul>
+            </div>
+            <div>
+                <strong class="highlight">🪟 Windows Privesc</strong>
+                <ul style="margin-top: 0.4rem;">
+                    <li>UAC bypass techniques</li>
+                    <li>Token impersonation (JuicyPotato)</li>
+                    <li>Service misconfigurations (Unquoted paths)</li>
+                    <li>AlwaysInstallElevated</li>
+                    <li>LSA secrets / SAM dump</li>
+                </ul>
+            </div>
+            <div>
+                <strong class="highlight">📌 Post-Exploitation</strong>
+                <ul style="margin-top: 0.4rem;">
+                    <li>Pivoting (ssh tunneling, chisel)</li>
+                    <li>Data exfiltration (encrypted channels)</li>
+                    <li>Persistence (scheduled tasks, services)</li>
+                    <li>Lateral movement (PsExec, WMI)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTF & bounty workflow timeline / blog style -->
+    <div style="margin: 2rem 0 1rem;">
+        <span class="section-title">⚡ From Zero to Bug Bounty Hunter — Workflow</span>
+        <div style="background: #03090f; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; font-size: 0.85rem;">
+                <div>1️⃣ <strong>Recon</strong><br> subfinder, amass, wayback</div>
+                <div>2️⃣ <strong>Enumeration</strong><br> ffuf, nuclei, katana</div>
+                <div>3️⃣ <strong>Vuln discovery</strong><br> manual + automated scanning</div>
+                <div>4️⃣ <strong>Exploit dev</strong><br> custom PoC, chaining</div>
+                <div>5️⃣ <strong>Report</strong><br> professional write-up</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- final reminder ethical / resources -->
+    <div style="background: rgba(255, 60, 30, 0.08); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.6rem;">⚖️</span>
+            <span><strong class="highlight">Ethical boundaries & authorization</strong> — Whether CTF, bounty, or pentesting, always stay within scope. Never attack without permission. Real hackers build, secure, and protect.</span>
+        </p>
+    </div>
+
+    <!-- next steps: foundation + core synergy -->
+    <div style="margin-top: 2rem; text-align: center; background: linear-gradient(145deg, #0c111b, #04070c); border-radius: 2rem; padding: 1.5rem;">
+        <span style="font-weight: 600;">📌 Core Domains + Foundation Zone = Complete Operator</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">⚔️ From kill chain to CTF flags — every technique requires strong fundamentals (Linux, networking, scripting). Master both tracks.</div>
+    </div>
+
+    <footer>
+        ⚔️ CORE CYBERSECURITY DOMAINS — Ethical Hacking · CTF · Bug Bounty<br>
+        Red Team mindset • Blue team synergy • Responsible by design
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c⚔️ CORE DOMAINS ACTIVE: Ethical Hacking, CTF, Bug Bounty", "color: #ff7e5e; font-size: 14px; font-weight: bold;");
+        console.log("%cFull Kill Chain | Recon → PrivEsc | CTF Categories | Bounty Reporting", "color: #b9c7e0;");
+    })();
+</script>
+</body>
+</html>

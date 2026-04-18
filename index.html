@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EWU Cybersecurity Club | Complete Learning Path</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0c12, #020408);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.8rem 4rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(46, 204, 164, 0.3);
+        }
+
+        .club-badge {
+            display: inline-block;
+            background: rgba(46, 204, 164, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid #2bd4a8;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #7affda;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #7affda, #2bd4a8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #c9e6f0;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-section {
+            background: rgba(8, 14, 24, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(46, 204, 164, 0.25);
+        }
+
+        .about-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+
+        .about-card {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+        }
+
+        .about-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #7affda;
+        }
+
+        .creator-card {
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: linear-gradient(145deg, #0e1624, #080c18);
+        }
+
+        .creator-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffd966;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        .creator-title {
+            font-size: 0.85rem;
+            color: #aac9ff;
+        }
+
+        .signature {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #6c8fb0;
+            margin-top: 0.5rem;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 0.8rem 0 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: #bcbcff;
+            font-size: 1.2rem;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            border: 1px solid rgba(123, 255, 218, 0.2);
+        }
+
+        .social-icon:hover {
+            background: #2bd4a8;
+            color: #0a0c12;
+            transform: translateY(-3px);
+            border-color: #2bd4a8;
+        }
+
+        .email-link {
+            background: rgba(46, 204, 164, 0.15);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-decoration: none;
+            color: #7affda;
+            border: 1px solid rgba(46, 204, 164, 0.4);
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .email-link:hover {
+            background: #2bd4a8;
+            color: #0a0c12;
+        }
+
+        /* Modules Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+
+        .module-card {
+            background: rgba(12, 18, 28, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(100, 100, 200, 0.25);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            transform: translateY(-6px);
+            border-color: #7affda;
+            box-shadow: 0 15px 30px -12px rgba(0, 255, 200, 0.2);
+        }
+
+        .module-header {
+            padding: 1.2rem 1.2rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .module-icon {
+            font-size: 2rem;
+        }
+
+        .module-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .module-desc {
+            padding: 0.8rem 1.2rem;
+            font-size: 0.85rem;
+            color: #bdd4ff;
+            min-height: 65px;
+        }
+
+        .module-link {
+            display: block;
+            background: rgba(46, 204, 164, 0.1);
+            text-align: center;
+            padding: 0.7rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #7affda;
+            text-decoration: none;
+            transition: 0.2s;
+            border-top: 1px solid rgba(46, 204, 164, 0.2);
+        }
+
+        .module-link:hover {
+            background: rgba(46, 204, 164, 0.25);
+            color: #ffffff;
+        }
+
+        .pillar-badge {
+            display: inline-block;
+            background: #1a2632;
+            border-radius: 20px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.65rem;
+            font-weight: 500;
+            margin-right: 0.4rem;
+            margin-bottom: 0.3rem;
+            color: #9fc6ff;
+        }
+
+        .btn-note {
+            background: #0f1722;
+            border-radius: 30px;
+            padding: 0.2rem 0.9rem;
+            font-size: 0.7rem;
+            display: inline-block;
+            font-family: monospace;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(46, 204, 164, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 { font-size: 2.2rem; }
+            .container { padding: 1rem; }
+            .about-grid { flex-direction: column; }
+        }
+
+        .highlight {
+            color: #7affda;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="club-badge">🔐 EWU CYBERSECURITY CLUB · COMPLETE LEARNING PATH</div>
+        <h1>From Foundation to<br>Red Team & APT Intelligence</h1>
+        <p>12 core modules covering offensive security, defensive operations, OSINT, forensics, IoT hacking, binary exploitation, and real-world adversary simulation.</p>
+    </div>
+
+    <!-- About EWU Club & Junior Section + Creator with Socials -->
+    <div class="about-section">
+        <div class="about-grid">
+            <div class="about-card">
+                <h3>🎓 About EWU Cybersecurity Club</h3>
+                <p>East West University Cybersecurity Club is a hub for aspiring security researchers, ethical hackers, and defenders. We focus on hands-on training, CTF competitions, and building a community that bridges academia with industry.</p>
+                <div style="margin-top: 0.8rem;">
+                    <span class="pillar-badge">🔴 Red Team</span>
+                    <span class="pillar-badge">🔵 Blue Team</span>
+                    <span class="pillar-badge">🟣 Purple Team</span>
+                    <span class="pillar-badge">🕵️ OSINT</span>
+                </div>
+            </div>
+            <div class="about-card">
+                <h3>🌱 A Note for Juniors</h3>
+                <p>Starting in cybersecurity can feel overwhelming — but every expert was once a beginner. <span class="highlight">Foundation Zone</span> is your launchpad. Master the basics: Linux, networking, Python, and security mindset. Then explore domains. Ask questions, break things in labs, and never stop learning.</p>
+                <div style="margin-top: 0.5rem;">
+                    <span class="btn-note">#NeverStopLearning</span>
+                    <span class="btn-note">#CTF</span>
+                    <span class="btn-note">#BuildLabs</span>
+                </div>
+            </div>
+            <div class="about-card creator-card">
+                <div style="font-size: 2rem;">🛡️</div>
+                <div class="creator-name">Zaber Mahmud</div>
+                <div class="creator-title">Vice President, EWU Cybersecurity Club</div>
+                <div class="creator-title">Cyber Security Researcher</div>
+                <div class="signature">"Empowering the next generation of defenders & offensive experts."</div>
+                
+                <!-- Social Links Under Name -->
+                <div class="social-links">
+                    <a href="https://www.facebook.com/Z4b3r.M4hMu3.As1F" target="_blank" class="social-icon" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/zabermahmudasif" target="_blank" class="social-icon" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/zaber-mahmud-asif/" target="_blank" class="social-icon" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:zaberewu@proton.me" class="social-icon" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <div style="margin-top: 0.4rem;">
+                    <a href="mailto:zaberewu@proton.me" class="email-link">
+                        <i class="fas fa-paper-plane"></i> zaberewu@proton.me
+                    </a>
+                </div>
+                <div style="margin-top: 0.6rem;">
+                    <span class="pillar-badge">🔍 OSCP Path</span>
+                    <span class="pillar-badge">📡 Threat Intel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12 Modules Grid -->
+    <h2 style="font-size: 1.8rem; margin: 1rem 0 0.5rem; display: flex; align-items: center; gap: 0.5rem;">📚 Curriculum · 13 Core Domains <span style="font-size: 0.8rem; background: #1a2632; padding: 0.2rem 0.8rem; border-radius: 30px;">mandatory + advanced tracks</span></h2>
+    <div class="modules-grid">
+	
+	        <!-- Module 1: Foundation Zone -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">📖</span>
+                <h3>Full Guide</h3>
+            </div>
+            <div class="module-desc">Here is Full Guide of Starting the Journey</div>
+            <a href="fullGuide.html" class="module-link">Explore →</a>
+        </div>
+        
+        <!-- Module 1: Foundation Zone -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">📖</span>
+                <h3>Foundation Zone</h3>
+            </div>
+            <div class="module-desc">Computer basics, networking, Linux, Python, security mindset — before any advanced track.</div>
+            <a href="foundation_zone.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 2: Core Cybersecurity Domains -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">⚔️</span>
+                <h3>Core Domains</h3>
+            </div>
+            <div class="module-desc">Ethical hacking kill chain, CTF, bug bounty — offensive & defensive pillars.</div>
+            <a href="core_domains.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 3: Web App Security -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">🌐</span>
+                <h3>Web App Security</h3>
+            </div>
+            <div class="module-desc">OWASP Top10, injections, XSS, SSRF, API/GraphQL, deserialization.</div>
+            <a href="web_app_security.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 4: OSINT (Passive) -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">🕵️</span>
+                <h3>OSINT (Passive)</h3>
+            </div>
+            <div class="module-desc">People, domains, emails, social media, geolocation, dark web archives.</div>
+            <a href="osint_passive.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 5: Active Recon -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">📡</span>
+                <h3>Active Recon</h3>
+            </div>
+            <div class="module-desc">Network scanning, port enumeration, service fingerprinting, vulnerability scanning.</div>
+            <a href="active_recon.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 6: IoT & Embedded Security -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">📡</span>
+                <h3>IoT & Embedded</h3>
+            </div>
+            <div class="module-desc">Firmware RE, hardware debug (UART/JTAG), BLE/Zigbee, SDR attacks.</div>
+            <a href="iot_embedded.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 7: Digital Forensics & IR -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">🔍</span>
+                <h3>DFIR</h3>
+            </div>
+            <div class="module-desc">Disk, memory (Volatility), network forensics, mobile & cloud artifacts.</div>
+            <a href="dfir.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 8: PWN + Boot2Root -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">💣</span>
+                <h3>PWN & Boot2Root</h3>
+            </div>
+            <div class="module-desc">Binary exploitation (ROP, heap), full attack chain from recon to root.</div>
+            <a href="pwn_boot2root.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 9: Red · Blue · Purple Teams -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">🔴🔵</span>
+                <h3>Red/Blue/Purple</h3>
+            </div>
+            <div class="module-desc">C2 frameworks, SIEM, threat hunting, MITRE ATT&CK, purple exercises.</div>
+            <a href="red_blue_purple.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 10: APT Tradecraft -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">🎯</span>
+                <h3>APT & Threat Intel</h3>
+            </div>
+            <div class="module-desc">State-sponsored groups, TTPs, emulation (Caldera), attribution, detection.</div>
+            <a href="apt_tradecraft.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 11: Tor Browser & Dark Web OSINT -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">🧅</span>
+                <h3>Tor & Dark Web</h3>
+            </div>
+            <div class="module-desc">Onion routing, .onion enumeration, dark web monitoring, anonymity OPSEC.</div>
+            <a href="tor_browser_osint.html" class="module-link">Explore →</a>
+        </div>
+
+        <!-- Module 12: Cloud & Container Security -->
+        <div class="module-card">
+            <div class="module-header">
+                <span class="module-icon">☁️</span>
+                <h3>Cloud & Container security</h3>
+            </div>
+            <div class="module-desc">AWS/Azure security, Kubernetes hardening, container escape, misconfigurations.</div>
+            <a href="#" class="module-link" style="opacity:0.8;">Coming Soon</a>
+        </div>
+    </div>
+
+    <!-- Learning Path Guidance -->
+    <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem 1.5rem; margin: 1rem 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;">
+            <div><span style="font-weight: 700;">📌 Suggested Track:</span> Foundation → Core Domains → Web/OSINT → Active Recon → PWN → Red/Blue/Purple → APT</div>
+            <div><span class="btn-note">🎯 #RoadToCyberExpert</span></div>
+        </div>
+    </div>
+
+    <!-- Ethical Reminder -->
+    <div style="background: rgba(46, 204, 164, 0.08); border-radius: 1.2rem; padding: 0.8rem 1.2rem; margin: 1rem 0; text-align: center; font-size: 0.8rem;">
+        ⚖️ All modules are for educational & authorized security testing only. Always follow responsible disclosure and legal boundaries.
+    </div>
+
+    <footer>
+        © 2025 EWU Cybersecurity Club — Curated by Zaber Mahmud, Vice President.<br>
+        Built for junior researchers, CTF players, and future red/blue teamers. Master the fundamentals, then ascend.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c🔐 EWU Cybersecurity Club — Complete Learning Hub", "color: #7affda; font-size: 14px; font-weight: bold;");
+        console.log("%c12 Modules: Foundation | Core | Web | OSINT | Active | IoT | DFIR | PWN | RBP | APT | Tor | Cloud", "color: #c9e6f0;");
+        console.log("%cCreated by Zaber Mahmud — Vice President, EWU Cybersecurity Club", "color: #ffd966;");
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tor Browser · Dark Web OSINT · Anonymity & Privacy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 80% 20%, #0a0c12, #010101);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(100, 80, 200, 0.5);
+            padding-bottom: 2rem;
+        }
+
+        .tor-badge {
+            display: inline-block;
+            background: rgba(100, 70, 200, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid #8f6eff;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #bc9aff;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #bc9aff, #8f6eff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbdff2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #8f6eff;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(143, 110, 255, 0.35);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #8f6eff;
+            box-shadow: 0 20px 30px -12px rgba(143, 110, 255, 0.3);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "🧅";
+            position: absolute;
+            left: 0;
+            color: #bc9aff;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(143, 110, 255, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #4a3a7e;
+            color: #d4bfff;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #8f6eff;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #1a1528;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #d4bfff;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #e0d5ff, #bc9aff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #8f6eff, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(143, 110, 255, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 { font-size: 2.2rem; }
+            .container { padding: 1rem; }
+        }
+
+        .highlight { color: #bc9aff; font-weight: 500; }
+        .warning-note {
+            background: #1a1525;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="tor-badge">🧅 TOR · DARK WEB OSINT · ANONYMITY</div>
+        <h1>Tor Browser · Onion Services · Dark Web Intelligence</h1>
+        <p>Anonymity network · .onion enumeration · Dark web monitoring · Operational security (OPSEC)</p>
+        <div class="pillars">
+            <span class="pill">🧅 Tor Architecture</span>
+            <span class="pill">🌑 Dark Web OSINT</span>
+            <span class="pill">🔒 OPSEC & Risks</span>
+            <span class="pill">📡 Onion Search Engines</span>
+        </div>
+    </div>
+
+    <!-- Two Main Sections -->
+    <div class="grid-2col">
+        <!-- Tor Architecture & Anonymity -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🧅</span> Tor Network & Anonymity</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Onion routing: guard → middle → exit node (3 hops)</li>
+                    <li>Tor Browser: hardened Firefox, fingerprint resistance</li>
+                    <li>Hidden services (.onion) — server anonymity</li>
+                    <li>Bridges & pluggable transports (obfs4, Snowflake) for censorship circumvention</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Tor Browser</span>
+                    <span class="tool">Tails OS</span>
+                    <span class="tool">Whonix</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dark Web OSINT & Enumeration -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🌑</span> Dark Web OSINT</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>.onion search engines: Ahmia, Torch, DarkSearch, OnionLand</li>
+                    <li>Dark web monitoring for leaks, breach data, illicit markets</li>
+                    <li>Telegram OSINT, Pastebin scraping (data dumps)</li>
+                    <li>Blockchain analysis for ransomware payments</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Ahmia</span>
+                    <span class="tool">OnionSearch</span>
+                    <span class="tool">Tor2web</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: Tor Routing & Hidden Services -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">🔄</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">How Tor Works — Onion Routing Explained</span>
+        </div>
+        <div style="margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+            <span class="method-badge">🔹 Client → Guard Node (entry)</span>
+            <span class="method-badge">🔹 Middle Node (relay)</span>
+            <span class="method-badge">🔹 Exit Node (to clearnet)</span>
+            <span class="method-badge">🔹 Hidden Service (.onion) — no exit node needed</span>
+        </div>
+        <div class="tools-tag" style="margin-top: 0.5rem;">
+            <span class="tool">nyx (tor status)</span>
+            <span class="tool">torrc configuration</span>
+        </div>
+        <div class="warning-note">
+            💡 <span class="highlight">Tor Limitations:</span> Exit nodes can sniff unencrypted traffic (use HTTPS). Timing attacks, correlation attacks possible for nation-state adversaries.
+        </div>
+    </div>
+
+    <!-- Dark Web OSINT Methodology -->
+    <div>
+        <span class="section-title">🕵️ Dark Web OSINT — Intelligence Gathering</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔎 Onion Search Engines</strong>
+                <div style="font-size: 0.8rem;">Ahmia.fi (clearnet gateway) · Torch (oldest) · DarkSearch (JSON API) · OnionLand</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📦 Data Leak Monitoring</strong>
+                <div style="font-size: 0.8rem;">Telegram channels (leaks, combolists) · BreachForums · Dread (Reddit-like)</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🧅 Hidden Service Enumeration</strong>
+                <div style="font-size: 0.8rem;">OnionScan (vulnerability scanner) · freshonions · Tor Metrics</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Web Markets & Risks -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #

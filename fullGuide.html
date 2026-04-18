@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>EWUCSC · Complete Cyber Security Roadmap | All Domains Deep Dive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #02040c;
+      font-family: 'Inter', sans-serif;
+      color: #edf2ff;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f1222; }
+    ::-webkit-scrollbar-thumb { background: #4c51a3; border-radius: 20px; }
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 2rem 1.8rem;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #1e2442;
+      padding-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 2.9rem;
+      font-weight: 800;
+      background: linear-gradient(145deg, #b8e1ff, #c084fc, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .hero p { color: #9ca8cf; max-width: 800px; margin: 0.8rem auto 0; font-size: 1.1rem; }
+    .badge-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+      margin-top: 1.3rem;
+    }
+    .badge {
+      background: #111827;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #a5b4fc;
+      border: 1px solid #2d3a5e;
+    }
+
+    /* navigation tabs */
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #1e2442;
+      padding-bottom: 1rem;
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #cbd5e6;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .nav-btn:hover { background: #1f2a48; color: white; }
+    .nav-btn.active { background: #7c3aed; color: white; box-shadow: 0 4px 14px rgba(124,58,237,0.4); }
+
+    .track-section {
+      display: none;
+      animation: fade 0.25s ease;
+    }
+    .track-section.active-section { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      letter-spacing: -0.3px;
+    }
+    .section-desc {
+      color: #8f9bb5;
+      margin-bottom: 2rem;
+      border-left: 4px solid #f97316;
+      padding-left: 1.2rem;
+      font-size: 1rem;
+    }
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.8rem;
+    }
+    .card {
+      background: #0b0e1a;
+      border-radius: 28px;
+      border: 1px solid #232842;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { border-color: #8b5cf6; transform: translateY(-3px); box-shadow: 0 10px 20px -8px rgba(0,0,0,0.5); }
+    .card-header {
+      padding: 1.2rem 1.5rem;
+      background: #070b16;
+      border-bottom: 1px solid #1b2138;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-header h3 { font-size: 1.4rem; font-weight: 700; }
+    .icon-emoj { font-size: 1.8rem; }
+    .card-body { padding: 1.2rem 1.5rem 1.6rem; }
+    .topic-list { list-style: none; margin-top: 0.3rem; }
+    .topic-list li {
+      font-size: 0.88rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed #1f2542;
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+    .topic-list li::before { content: "▹"; color: #fb923c; font-size: 0.8rem; font-weight: bold; }
+    .tools-badge {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1rem;
+      padding-top: 0.5rem;
+    }
+    .tool-tag {
+      background: #1a2340;
+      border-radius: 24px;
+      padding: 0.2rem 0.9rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #c7d2fe;
+    }
+    .warning-note {
+      background: #0d1123;
+      border-left: 4px solid #f97316;
+      padding: 0.8rem 1.2rem;
+      border-radius: 20px;
+      margin: 1.5rem 0 0.5rem;
+      font-size: 0.85rem;
+    }
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      border-top: 1px solid #1e2442;
+      padding-top: 2rem;
+      font-size: 0.8rem;
+      color: #6c789b;
+    }
+    @media (max-width: 760px) {
+      .container { padding: 1rem; }
+      .hero h1 { font-size: 1.8rem; }
+      .grid-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>🧭 EWUCSC · COMPLETE CYBER ROADMAP</h1>
+    <p>Foundation → Core → Web | OSINT | IoT | CCTV | IPTV | Forensics | PWN/Boot2Root — full descriptions, tools & practice</p>
+    <div class="badge-group">
+      <span class="badge">🌐 Web</span> <span class="badge">🕵️ OSINT</span> <span class="badge">📡 IoT</span>
+      <span class="badge">📹 CCTV</span> <span class="badge">📺 IPTV</span> <span class="badge">🔍 Forensics</span>
+      <span class="badge">💣 PWN</span> <span class="badge">🚀 Boot2Root</span>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <button class="nav-btn active" data-track="foundation">📖 Foundation</button>
+    <button class="nav-btn" data-track="core">⚔️ Core Domains</button>
+    <button class="nav-btn" data-track="web">🌐 Web Security</button>
+    <button class="nav-btn" data-track="osint">🕵️ OSINT</button>
+    <button class="nav-btn" data-track="iot">📡 IoT Security</button>
+    <button class="nav-btn" data-track="cctv">📹 CCTV / Surveillance</button>
+    <button class="nav-btn" data-track="iptv">📺 IPTV & Streaming</button>
+    <button class="nav-btn" data-track="forensics">🔍 Forensics</button>
+    <button class="nav-btn" data-track="pwn">💣 PWN / Boot2Root</button>
+    <button class="nav-btn" data-track="redblue">🔴🔵 Red/Blue/Purple</button>
+  </div>
+
+  <!-- ================= 1. FOUNDATION ZONE (EVERYTHING DESCRIBED) ================= -->
+  <div id="foundation" class="track-section active-section">
+    <div class="section-title">📖 1. FOUNDATION ZONE — mandatory for every member</div>
+    <div class="section-desc">Computer basics, networking, Linux, Python, security mindset — before touching any advanced track.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">💻</span><h3>Computer & OS Mastery</h3></div><div class="card-body"><ul class="topic-list"><li>CPU, RAM, Storage architecture, virtualization (VMware/VirtualBox)</li><li>Windows & Linux fundamentals: file hierarchy, processes, services</li><li>Command line proficiency (bash, PowerShell basics)</li><li>Disk partitioning, boot process, environment variables</li></ul><div class="tools-badge"><span class="tool-tag">VirtualBox</span><span class="tool-tag">WSL2</span><span class="tool-tag">Linux CLI</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🌐</span><h3>Networking Essentials</h3></div><div class="card-body"><ul class="topic-list"><li>OSI & TCP/IP models (deep: encapsulation, MTU)</li><li>IP addressing, subnetting, CIDR, NAT, DHCP, DNS resolution</li><li>Common ports & protocols (HTTP/HTTPS, FTP, SSH, DNS, SMTP)</li><li>Firewalls, ACLs, packet filtering basics</li><li>Packet analysis intro (Wireshark filters, tcpdump)</li></ul><div class="tools-badge"><span class="tool-tag">Wireshark</span><span class="tool-tag">Nmap</span><span class="tool-tag">tcpdump</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🐍</span><h3>Programming for Hackers</h3></div><div class="card-body"><ul class="topic-list"><li>Python: automation, socket programming, exploit scripting, requests library</li><li>C basics: memory management, pointers, buffer overflow understanding</li><li>JavaScript: DOM manipulation, XSS payloads, web token tampering</li><li>Bash scripting: loops, grep, awk for log analysis</li></ul><div class="tools-badge"><span class="tool-tag">Python</span><span class="tool-tag">GCC</span><span class="tool-tag">Node.js</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔐</span><h3>Security Mindset & Crypto Basics</h3></div><div class="card-body"><ul class="topic-list"><li>CIA Triad, IAAA (Identification, Authentication, Authorization, Accountability)</li><li>Symmetric vs Asymmetric encryption, hashing algorithms (MD5, SHA)</li><li>Digital signatures, PKI, certificates basics</li><li>Risk assessment, threat modeling (STRIDE, DREAD)</li><li>Ethical boundaries & responsible disclosure</li></ul><div class="tools-badge"><span class="tool-tag">OpenSSL</span><span class="tool-tag">hashcat</span></div></div></div>
+    </div>
+    <div class="warning-note">⚠️ Foundation is MANDATORY. No one jumps into Reverse Engineering or PWN without Linux + Python + Networking.</div>
+  </div>
+
+  <!-- ================= 2. CORE DOMAINS ================= -->
+  <div id="core" class="track-section">
+    <div class="section-title">⚔️ 2. CORE CYBERSECURITY DOMAINS</div>
+    <div class="section-desc">Ethical Hacking, CTF, Bug Bounty – the pillars of offensive & defensive skills.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">🕵️</span><h3>Ethical Hacking (Full Kill Chain)</h3></div><div class="card-body"><ul class="topic-list"><li>Reconnaissance (passive/active), OSINT + DNS enumeration</li><li>Scanning & enumeration: Nmap, masscan, service versioning</li><li>Vulnerability assessment (Nessus, OpenVAS)</li><li>Exploitation (Metasploit, manual exploits)</li><li>Post-exploitation: persistence, pivoting, data exfiltration</li><li>Privilege escalation (Linux: SUID, sudo, cron; Windows: UAC bypass)</li></ul><div class="tools-badge"><span class="tool-tag">Metasploit</span><span class="tool-tag">Nmap</span><span class="tool-tag">Burp Suite</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🎯</span><h3>CTF & Bug Bounty</h3></div><div class="card-body"><ul class="topic-list"><li>CTF categories: Web, Pwn, Reverse, Crypto, Forensics, OSINT</li><li>Bug bounty methodology: reconnaissance, attack surface mapping</li><li>Writing professional reports, PoC, responsible disclosure</li><li>Tools for automation: nuclei, ffuf, gospider, subfinder</li></ul><div class="tools-badge"><span class="tool-tag">Burp Suite</span><span class="tool-tag">FFUF</span><span class="tool-tag">Nuclei</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- ================= 3. WEB SECURITY (COMPLETE) ================= -->
+  <div id="web" class="track-section">
+    <div class="section-title">🌐 WEB APPLICATION SECURITY — OWASP Top10 & Advanced</div>
+    <div class="section-desc">Full-spectrum web attacks: recon, injections, XSS, auth flaws, API, SSRF, deserialization.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔎</span><h3>Recon & Asset Discovery</h3></div><div class="card-body"><ul class="topic-list"><li>Subdomain enumeration (Amass, sublist3r, chaos)</li><li>Technology fingerprinting (Wappalyzer, whatweb)</li><li>Directory/file brute force, JS endpoint extraction</li><li>Cloud bucket enumeration, GitHub leaks</li></ul><div class="tools-badge"><span class="tool-tag">Amass</span><span class="tool-tag">gau</span><span class="tool-tag">Katana</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">💉</span><h3>Injection Attacks</h3></div><div class="card-body"><ul class="topic-list"><li>SQL injection (Union, Boolean, Time-based, out-of-band)</li><li>NoSQL injection, LDAP injection, Command injection</li><li>XXE (XML external entity) — local file read, SSRF</li><li>ORM injection, template injection (SSTI)</li></ul><div class="tools-badge"><span class="tool-tag">SQLmap</span><span class="tool-tag">NoSQLMap</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🎭</span><h3>XSS, CSRF & SSRF</h3></div><div class="card-body"><ul class="topic-list"><li>Reflected, Stored, DOM-based XSS — advanced payloads, CSP bypass</li><li>CSRF (Cross-Site Request Forgery) token bypass</li><li>SSRF (Server-Side Request Forgery) to internal networks, cloud metadata</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔑</span><h3>Authentication & Session flaws</h3></div><div class="card-body"><ul class="topic-list"><li>JWT attacks (alg none, kid injection, weak secrets)</li><li>Brute force protection bypass, credential stuffing</li><li>OAuth misconfigurations, insecure password reset</li><li>Session fixation, cookie hijacking</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">⚙️</span><h3>API & GraphQL Security</h3></div><div class="card-body"><ul class="topic-list"><li>API enumeration, mass assignment, IDOR (Insecure Direct Object References)</li><li>GraphQL introspection, batching attacks, resource exhaustion</li><li>Rate limiting bypass, JWT in APIs</li></ul><div class="tools-badge"><span class="tool-tag">Postman</span><span class="tool-tag">Clairvoyance</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🧩</span><h3>Deserialization & Advanced</h3></div><div class="card-body"><ul class="topic-list"><li>Insecure deserialization (Java, PHP, Python pickles)</li><li>Web cache poisoning, HTTP request smuggling</li><li>CORS misconfiguration, clickjacking</li></ul></div></div>
+    </div>
+    <div class="warning-note">🎯 Labs: PortSwigger Web Security Academy, PentesterLab, HackTheBox web challenges, TryHackMe.</div>
+  </div>
+
+  <!-- ================= 4. OSINT DEEP ================= -->
+  <div id="osint" class="track-section">
+    <div class="section-title">🕵️ OSINT — Open Source Intelligence (full spectrum)</div>
+    <div class="section-desc">Passive reconnaissance: people, domains, emails, social media, geolocation, dark web.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">🌍</span><h3>Domain & Infrastructure OSINT</h3></div><div class="card-body"><ul class="topic-list"><li>WHOIS, DNS records (A, MX, TXT, NS), reverse DNS</li><li>SSL/TLS certificate transparency (crt.sh, CertSpotter)</li><li>Shodan, Censys, ZoomEye for exposed devices/services</li><li>ASN & IP range mapping (BGP tools)</li></ul><div class="tools-badge"><span class="tool-tag">theHarvester</span><span class="tool-tag">dnsrecon</span><span class="tool-tag">Shodan</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">👤</span><h3>People & Social Media Intel</h3></div><div class="card-body"><ul class="topic-list"><li>Username correlation across platforms (Sherlock, Maigret)</li><li>Email enumeration & breach data (Dehashed, HaveIBeenPwned)</li><li>Social scraping (Twitter, LinkedIn, Instagram) – ethical only</li><li>Metadata in public documents (PDF, Office files)</li></ul><div class="tools-badge"><span class="tool-tag">Maltego</span><span class="tool-tag">Recon-ng</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🗺️</span><h3>Geolocation & Imagery</h3></div><div class="card-body"><ul class="topic-list"><li>EXIF data extraction from images, reverse image search (Google, Yandex)</li><li>Geolocation via landmarks, street view (OSINT geolocation CTFs)</li><li>Satellite imagery analysis (Google Earth, Sentinel Hub)</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🌑</span><h3>Dark Web & Archives</h3></div><div class="card-body"><ul class="topic-list"><li>Wayback Machine (historical web pages, deleted content)</li><li>Pastebin & code repository dumps, Telegram OSINT</li><li>Onion sites enumeration (Ahmia, Torch)</li></ul><div class="tools-badge"><span class="tool-tag">Tor</span><span class="tool-tag">OnionSearch</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- ================= 5. IoT SECURITY (detailed) ================= -->
+  <div id="iot" class="track-section">
+    <div class="section-title">📡 IoT & Embedded Security</div>
+    <div class="section-desc">Firmware reverse engineering, hardware interfaces, radio protocols (BLE/Zigbee), SDR.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔧</span><h3>Firmware Hacking</h3></div><div class="card-body"><ul class="topic-list"><li>Extracting firmware (binwalk, dd, flash dump)</li><li>Analyzing filesystems (squashfs, JFFS2)</li><li>Emulating firmware with QEMU / Firmadyne</li><li>Hardcoded secrets, backdoor analysis, patch diffing</li></ul><div class="tools-badge"><span class="tool-tag">binwalk</span><span class="tool-tag">Ghidra</span><span class="tool-tag">FAT</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">📡</span><h3>Wireless & Radio Attacks</h3></div><div class="card-body"><ul class="topic-list"><li>BLE sniffing, advertising manipulation, GATT exploitation</li><li>Zigbee / Z-Wave security (key extraction, replay)</li><li>Software Defined Radio (RTL-SDR): capturing signals, replay attacks</li><li>RFID/NFC cloning, brute force</li></ul><div class="tools-badge"><span class="tool-tag">Ubertooth</span><span class="tool-tag">GNU Radio</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">⚙️</span><h3>Hardware Debug Interfaces</h3></div><div class="card-body"><ul class="topic-list"><li>UART, JTAG, SWD, SPI, I2C — debugging and dumping firmware</li><li>Logic analyzers (Saleae, PulseView) for signal sniffing</li><li>Reading datasheets, identifying test points</li><li>Side-channel attacks (power analysis, glitching intro)</li></ul></div></div>
+    </div>
+    <div class="warning-note">🛠️ IoT labs: OWASP IoT Goat, Damn Vulnerable IoT Device, HackTheBox hardware challenges.</div>
+  </div>
+
+  <!-- ================= 6. CCTV / SURVEILLANCE ================= -->
+  <div id="cctv" class="track-section">
+    <div class="section-title">📹 CCTV & Physical Surveillance Security</div>
+    <div class="section-desc">IP cameras, DVR/NVR, default creds, firmware backdoors, and physical bypasses.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">📷</span><h3>IP Camera Recon & Exploit</h3></div><div class="card-body"><ul class="topic-list"><li>Shodan/Censys dorking for exposed cameras (RTSP, HTTP interfaces)</li><li>Default credentials database (admin:blank, 12345, root:pass)</li><li>Known CVEs (Hikvision, Dahua, Axis) – command injection, auth bypass</li><li>ONVIF protocol scanning, snapshot theft</li></ul><div class="tools-badge"><span class="tool-tag">nmap scripts</span><span class="tool-tag">ONVIF Device Manager</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔓</span><h3>DVR/NVR Vulnerabilities</h3></div><div class="card-body"><ul class="topic-list"><li>Backdoor accounts, hardcoded APIs</li><li>Video feed interception (unencrypted RTSP)</li><li>Firmware extraction & backdoor analysis</li><li>Physical security: blind spots, IR illumination bypass</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🛡️</span><h3>Defensive Hardening</h3></div><div class="card-body"><ul class="topic-list"><li>Segregate CCTV network (VLAN, firewall rules)</li><li>Disable UPnP, change default credentials, firmware updates</li><li>Encrypt video streams, enable HTTPS, 2FA on VMS</li><li>Forensics from DVR storage, log analysis</li></ul></div></div>
+    </div>
+  </div>
+
+  <!-- ================= 7. IPTV & STREAMING SECURITY ================= -->
+  <div id="iptv" class="track-section">
+    <div class="section-title">📺 IPTV & Streaming Platform Security</div>
+    <div class="section-desc">HLS/DASH, M3U manipulation, DRM bypass, token theft, anti-piracy.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">📡</span><h3>IPTV Architecture & Recon</h3></div><div class="card-body"><ul class="topic-list"><li>Streaming protocols: HLS (m3u8), DASH, RTMP</li><li>Middleware, EPG servers, subscription portals</li><li>Identifying exposed playlists, token generation endpoints</li></ul><div class="tools-badge"><span class="tool-tag">ffmpeg</span><span class="tool-tag">youtube-dl</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔓</span><h3>Attacks & Exploitation</h3></div><div class="card-body"><ul class="topic-list"><li>M3U playlist scraping, token forgery or replay attacks</li><li>DRM stripping (Widevine L3, PlayReady), license server flaws</li><li>Geo-restriction bypass, session hijacking of premium accounts</li><li>Stalker portal vulnerabilities (MAC spoofing)</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">📦</span><h3>Piracy & Anti-Piracy</h3></div><div class="card-body"><ul class="topic-list"><li>Credential stuffing on OTT platforms (Netflix, Hulu, Disney+)</li><li>Watermarking forensic techniques</li><li>Anomaly detection in concurrent streams</li><li>Legal aspects: DMCA, anti-circumvention</li></ul></div></div>
+    </div>
+    <div class="warning-note">⚖️ All IPTV attacks must be practiced in authorized labs only. Unauthorized streaming piracy is illegal.</div>
+  </div>
+
+  <!-- ================= 8. FORENSICS ================= -->
+  <div id="forensics" class="track-section">
+    <div class="section-title">🔍 DIGITAL FORENSICS & Incident Response</div>
+    <div class="section-desc">Disk, memory, network, mobile forensics – evidence preservation, timeline analysis.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">💽</span><h3>Disk & File System Forensics</h3></div><div class="card-body"><ul class="topic-list"><li>Acquisition: DD, FTK Imager, EWF formats</li><li>File carving (foremost, scalpel), recovering deleted files</li><li>NTFS $MFT analysis, EXT4 journal, FAT artifacts</li><li>Timeline analysis (Plaso, log2timeline)</li></ul><div class="tools-badge"><span class="tool-tag">Autopsy</span><span class="tool-tag">Sleuth Kit</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🧠</span><h3>Memory Forensics (Volatility)</h3></div><div class="card-body"><ul class="topic-list"><li>RAM acquisition (LiME, winpmem)</li><li>Process list, hidden processes, DLL injection detection</li><li>Network connections, registry from memory</li><li>Malware rootkit detection, YARA scanning</li></ul><div class="tools-badge"><span class="tool-tag">Volatility3</span><span class="tool-tag">Rekall</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🌐</span><h3>Network Forensics</h3></div><div class="card-body"><ul class="topic-list"><li>PCAP analysis: TCP stream reconstruction, TLS decryption (with keys)</li><li>Zeek (Bro) logs, metadata extraction</li><li>Detecting C2 traffic, exfiltration patterns</li><li>Wireshark advanced filters, tshark scripting</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">📱</span><h3>Mobile & Cloud Forensics</h3></div><div class="card-body"><ul class="topic-list"><li>Android logical & physical extraction (ADB, Cellebrite basics)</li><li>iOS backups analysis, plist parsing</li><li>Cloud artifact collection (AWS CloudTrail, Google Takeout)</li></ul></div></div>
+    </div>
+  </div>
+
+  <!-- ================= 9. PWN & BOOT2ROOT ================= -->
+  <div id="pwn" class="track-section">
+    <div class="section-title">💣 PWN (Binary Exploitation) + Boot2Root Attack Chain</div>
+    <div class="section-desc">Memory corruption, ROP, heap exploitation, then full pentest machines from recon to root.</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">⚔️</span><h3>Binary Exploitation Core</h3></div><div class="card-body"><ul class="topic-list"><li>Stack buffer overflows, return-to-libc, ROP chain construction</li><li>Format string vulnerabilities (arbitrary read/write)</li><li>Heap exploitation: use-after-free, tcache poisoning, fastbin dup</li><li>ASLR & NX bypass, PIE, canary leaks</li></ul><div class="tools-badge"><span class="tool-tag">pwntools</span><span class="tool-tag">GDB/pwndbg</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🚀</span><h3>Boot2Root Full Methodology</h3></div><div class="card-body"><ul class="topic-list"><li>Phase1 Recon: Nmap, dirbusting, service enumeration</li><li>Phase2 Exploitation: web app exploit, reverse shell, foothold</li><li>Phase3 Privilege Escalation: SUID, sudo -l, cron jobs, kernel exploits</li><li>Phase4 Post-exploit: persistence, lateral movement, flags</li></ul><div class="tools-badge"><span class="tool-tag">LinPEAS</span><span class="tool-tag">WinPEAS</span><span class="tool-tag">Metasploit</span></div></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🏁</span><h3>Practice Platforms</h3></div><div class="card-body"><ul class="topic-list"><li>VulnHub (Boot2Root VMs), Hack The Box (Starting Point → Pro Labs)</li><li>TryHackMe (Offensive Pentesting, Wreath)</li><li>Pwnable.tw, PwnableKr, CTF pwn challenges</li></ul></div></div>
+    </div>
+    <div class="warning-note">⚠️ Prerequisites: C programming, Linux, networking, and assembly basics. Never skip foundation.</div>
+  </div>
+
+  <!-- ================= 10. RED/BLUE/PURPLE ================= -->
+  <div id="redblue" class="track-section">
+    <div class="section-title">🔴🔵 Red Team · Blue Team · Purple Team</div>
+    <div class="grid-cards">
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔴</span><h3>Red Team (Offensive)</h3></div><div class="card-body"><ul class="topic-list"><li>Adversary emulation, C2 frameworks (Cobalt Strike, Mythic)</li><li>Social engineering, phishing infrastructure</li><li>Lateral movement (PsExec, WMI, WinRM), evasion techniques</li><li>EDR bypass, AMSI patching, reflective loading</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🔵</span><h3>Blue Team (Defensive)</h3></div><div class="card-body"><ul class="topic-list"><li>SIEM: Splunk, ELK Stack (Elastic Security)</li><li>Threat hunting (Sigma rules, YARA)</li><li>Incident response lifecycle: preparation, detection, containment</li><li>Network monitoring (Zeek, Suricata), log analysis</li></ul></div></div>
+      <div class="card"><div class="card-header"><span class="icon-emoj">🟣</span><h3>Purple Team (Collaboration)</h3></div><div class="card-body"><ul class="topic-list"><li>Attack simulation & detection engineering</li><li>Atomic Red Team, Caldera for purple exercises</li><li>Mapping MITRE ATT&CK, gap analysis</li></ul></div></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>🎓 EWUCSC Complete Roadmap — from Foundation to Web, OSINT, IoT, CCTV, IPTV, Forensics, PWN, Boot2Root, and Red/Blue.</p>
+    <p>⚠️ All practical attacks must be performed in isolated labs (VMs, CTF platforms, legal ranges). Stay ethical, keep learning.</p>
+  </footer>
+</div>
+
+<script>
+  const btns = document.querySelectorAll('.nav-btn');
+  const sections = document.querySelectorAll('.track-section');
+  function switchTrack(trackId) {
+    sections.forEach(sec => sec.classList.remove('active-section'));
+    const target = document.getElementById(trackId);
+    if(target) target.classList.add('active-section');
+    btns.forEach(btn => {
+      if(btn.getAttribute('data-track') === trackId) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+  }
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const track = btn.getAttribute('data-track');
+      if(track) switchTrack(track);
+    });
+  });
+  if(window.location.hash) {
+    const hashId = window.location.hash.substring(1);
+    if(document.getElementById(hashId)) switchTrack(hashId);
+  }
+</script>
+</body>
+</html>

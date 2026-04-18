@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>IoT & Embedded Security | Firmware · Hardware · Wireless · SDR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0c12, #020408);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(0, 255, 200, 0.3);
+            padding-bottom: 2rem;
+        }
+
+        .iot-badge {
+            display: inline-block;
+            background: rgba(0, 200, 150, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid #2bd4a8;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #7affda;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #7affda, #2bd4a8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #c9e6f0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #2bd4a8;
+        }
+
+        /* Card Grid */
+        .iot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(43, 212, 168, 0.3);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #2bd4a8;
+            box-shadow: 0 20px 30px -12px rgba(43, 212, 168, 0.25);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "📡";
+            position: absolute;
+            left: 0;
+            color: #5affd0;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(43, 212, 168, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #2c6e5a;
+            color: #b2ffe6;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #2bd4a8;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #0e241e;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #8effe0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #c5f5e8, #5affd0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #2bd4a8, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(43, 212, 168, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #5affd0;
+            font-weight: 500;
+        }
+
+        .warning-note {
+            background: #0e1a18;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="iot-badge">📡 IoT & EMBEDDED SECURITY</div>
+        <h1>Firmware Reverse Engineering<br>Hardware Interfaces · Radio Protocols · SDR</h1>
+        <p>Binwalk · Ghidra · UART · JTAG · BLE · Zigbee · RTL-SDR — break and secure the physical world.</p>
+        <div class="pillars">
+            <span class="pill">🔧 Firmware Hacking</span>
+            <span class="pill">📡 Wireless & Radio Attacks</span>
+            <span class="pill">⚙️ Hardware Debug Interfaces</span>
+            <span class="pill">🔐 Side-Channels & Glitching</span>
+        </div>
+    </div>
+
+    <!-- Main Cards Grid: Three core modules -->
+    <div class="iot-grid">
+        <!-- Firmware Hacking -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🔧</span> Firmware Hacking</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Extracting firmware (binwalk, dd, flash dump)</li>
+                    <li>Analyzing filesystems (squashfs, JFFS2)</li>
+                    <li>Emulating firmware with QEMU / Firmadyne</li>
+                    <li>Hardcoded secrets, backdoor analysis, patch diffing</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">binwalk</span>
+                    <span class="tool">Ghidra</span>
+                    <span class="tool">FAT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wireless & Radio Attacks -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>📡</span> Wireless & Radio Attacks</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>BLE sniffing, advertising manipulation, GATT exploitation</li>
+                    <li>Zigbee / Z-Wave security (key extraction, replay)</li>
+                    <li>Software Defined Radio (RTL-SDR): capturing signals, replay attacks</li>
+                    <li>RFID/NFC cloning, brute force</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Ubertooth</span>
+                    <span class="tool">GNU Radio</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hardware Debug Interfaces -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>⚙️</span> Hardware Debug Interfaces</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>UART, JTAG, SWD, SPI, I2C — debugging and dumping firmware</li>
+                    <li>Logic analyzers (Saleae, PulseView) for signal sniffing</li>
+                    <li>Reading datasheets, identifying test points</li>
+                    <li>Side-channel attacks (power analysis, glitching)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">JTAGulator</span>
+                    <span class="tool">Saleae Logic</span>
+                    <span class="tool">ChipWhisperer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: Firmware Reverse Engineering Workflow -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">🔬</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">Firmware Reverse Engineering — Step by Step</span>
+        </div>
+        <div style="margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <span class="method-badge">1. Acquisition (dump via flash programmer / OTA)</span>
+            <span class="method-badge">2. Identification (binwalk, file, strings)</span>
+            <span class="method-badge">3. Extraction (squashfs, cpio, uImage)</span>
+            <span class="method-badge">4. Static analysis (Ghidra, IDA, radare2)</span>
+            <span class="method-badge">5. Emulation (QEMU, Firmadyne, Unicorn)</span>
+            <span class="method-badge">6. Dynamic analysis / debugging</span>
+        </div>
+        <div class="tools-tag" style="margin-top: 0.5rem;">
+            <span class="tool">binwalk -Me firmware.bin</span>
+            <span class="tool">firmware-mod-kit</span>
+            <span class="tool">FACT (Firmware Analysis Tool)</span>
+        </div>
+        <div class="warning-note">
+            💡 <span class="highlight">Pro tip:</span> Many IoT devices contain hardcoded SSH keys, API tokens, or backdoor credentials. Always extract the root filesystem and grep for "password", "key", "token", "secret".
+        </div>
+    </div>
+
+    <!-- Wireless Protocols Matrix -->
+    <div>
+        <span class="section-title">📡 Wireless Protocol Security Landscape</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔵 BLE (Bluetooth Low Energy)</strong>
+                <div style="font-size: 0.8rem;">Advertising spoofing, MAC address randomization bypass, GATT write injection, BlueBorne, Sweyntooth</div>
+                <div class="tools-tag" style="margin-top: 0.6rem;"><span class="tool">bettercap</span><span class="tool">GATTacker</span></div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🐝 Zigbee / 802.15.4</strong>
+                <div style="font-size: 0.8rem;">Network key extraction, replay attacks, association flooding, KillerBee framework</div>
+                <div class="tools-tag" style="margin-top: 0.6rem;"><span class="tool">KillerBee</span><span class="tool">Zigator</span></div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📻 SDR (Software Defined Radio)</strong>
+                <div style="font-size: 0.8rem;">RF signal capture (IQ files), demodulation (AM/FM/ASK/FSK), replay attacks (HackRF, RTL-SDR), rolljam</div>
+                <div class="tools-tag" style="margin-top: 0.6rem;"><span class="tool">GNU Radio</span><span class="tool">Universal Radio Hacker</span></div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">💳 RFID/NFC</strong>
+                <div style="font-size: 0.8rem;">Mifare Classic cracking (hardnested), cloning, EMV relay attacks, ChameleonUltra</div>
+                <div class="tools-tag" style="margin-top: 0.6rem;"><span class="tool">Proxmark3</span><span class="tool">MFOC</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hardware Debug & Side-Channel Attacks -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🔌 UART / JTAG / SWD — Debug Interface Exploitation</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ Identifying UART pins (TX, RX, GND, Vcc) with multimeter</li>
+                <li>→ Bypassing serial console authentication (bootloader interrupt)</li>
+                <li>→ JTAG boundary scan — reading/writing memory directly</li>
+                <li>→ SWD (Serial Wire Debug) — dumping MCU flash via OpenOCD</li>
+                <li>→ SPI / I2C sniffing for inter-chip communication</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">Bus Pirate</span>
+                <span class="tool">FT232H</span>
+                <span class="tool">OpenOCD</span>
+                <span class="tool">Logic 2 (Saleae)</span>
+            </div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">⚡ Side-Channel & Fault Injection</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>🔹 Simple Power Analysis (SPA) — visualize cryptographic operations</li>
+                <li>🔹 Differential Power Analysis (DPA) — extract AES/private keys</li>
+                <li>🔹 Voltage glitching — skip instructions, bypass security checks</li>
+                <li>🔹 Clock glitching — cause faults in CPU execution</li>
+                <li>🔹 Electromagnetic (EM) analysis — non-invasive key extraction</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">ChipWhisperer</span>
+                <span class="tool">PicoScope</span>
+                <span class="tool">Glitcher</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SDR & RF Hacking Deep Dive -->
+    <div class="deep-section" style="background: #0a131f;">
+        <h3 style="margin-bottom: 1rem;">📻 Software Defined Radio (SDR) — Capturing the Invisible</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem;">
+            <div>
+                <span class="highlight">🛠️ Hardware</span>
+                <div style="font-size: 0.85rem;">RTL-SDR (cheap), HackRF One (TX/RX), LimeSDR, BladeRF, PlutoSDR</div>
+            </div>
+            <div>
+                <span class="highlight">📡 Common Attacks</span>
+                <div style="font-size: 0.85rem">Key fob replay, rolljam, ADS-B spoofing, GPS jamming, GSM sniffing, weather satellite decoding</div>
+            </div>
+            <div>
+                <span class="highlight">🧪 Tools</span>
+                <div style="font-size: 0.85rem">GQRX, SDR#, Universal Radio Hacker, Inspectrum, rtl_433, rtl-sdr</div>
+            </div>
+        </div>
+        <hr>
+        <div><span class="tool">rtl_sdr -f 433M -s 2.4M -g 20 -</span> <span class="tool">Universal Radio Hacker</span> <span class="tool">GNU Radio Companion</span></div>
+        <div class="warning-note" style="margin-top: 1rem;">
+            🛡️ <span class="highlight">Legal note:</span> Always ensure you have permission to capture or replay RF signals. Some frequencies are restricted (cell bands, aviation, government).
+        </div>
+    </div>
+
+    <!-- IoT Security Frameworks & Toolchains -->
+    <div style="margin: 2rem 0;">
+        <span class="section-title">🧰 IoT Security Arsenal — Complete Toolchain</span>
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start;">
+                <span class="method-badge">🔧 Firmware: binwalk, Ghidra, QEMU, Firmadyne, Angr</span>
+                <span class="method-badge">📡 Wireless: Ubertooth, GATTacker, KillerBee, URH</span>
+                <span class="method-badge">⚙️ Hardware: JTAGulator, Saleae, OpenOCD, Bus Pirate</span>
+                <span class="method-badge">🔐 Side-channel: ChipWhisperer, Lascar, PicoScope</span>
+                <span class="method-badge">📻 SDR: GNU Radio, HackRF, RTL-SDR, gqrx</span>
+            </div>
+            <div class="tools-tag" style="margin-top: 1.2rem;">
+                <span class="tool">Attify Badge</span>
+                <span class="tool">Frida-ios-hook</span>
+                <span class="tool">Exploit-DB (IoT)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- IoT Attack Surface Summary -->
+    <div class="deep-section" style="background: #0a111c;">
+        <span style="font-weight: 800; font-size: 1.2rem;">🎯 Common IoT Attack Vectors</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 0.8rem; margin-top: 1rem;">
+            <div><span class="highlight">Web/Cloud</span> — API vulnerabilities, weak MQTT auth</div>
+            <div><span class="highlight">Mobile App</span> — insecure API keys, hardcoded secrets</div>
+            <div><span class="highlight">Firmware</span> — backdoors, debug interfaces exposed</div>
+            <div><span class="highlight">Wireless</span> — BLE/Zigbee sniffing, replay, deauth</div>
+            <div><span class="highlight">Hardware</span> — UART shell, JTAG dump, glitching</div>
+            <div><span class="highlight">Side-channel</span> — power/EM analysis for crypto keys</div>
+        </div>
+    </div>
+
+    <!-- Ethical & Safety Reminder -->
+    <div style="background: rgba(43, 212, 168, 0.1); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">⚖️</span>
+            <span><strong class="highlight">Responsible IoT Security Research</strong> — Only test devices you own or have explicit authorization for. Reverse engineering firmware may violate EULAs. Radio transmissions are regulated — use SDR ethically in shielded environments or licensed frequencies.</span>
+        </p>
+    </div>
+
+    <!-- Certification / Learning Path Note -->
+    <div style="text-align: center; background: linear-gradient(145deg, #0a0f1a, #02070e); border-radius: 2rem; padding: 1.5rem; margin-top: 1rem;">
+        <span style="font-weight: 700;">📡 IoT Security Mastery Roadmap: Firmware RE → Hardware Debug → SDR → Side-channel</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">Tools: binwalk · Ghidra · JTAGulator · Ubertooth · GNU Radio · ChipWhisperer</div>
+    </div>
+
+    <footer>
+        📡 IoT & Embedded Security — Firmware reverse engineering, hardware debug interfaces, BLE/Zigbee/SDR attacks, side-channel analysis.<br>
+        Break hardware, secure the physical layer.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c📡 IoT & Embedded Security Module Loaded", "color: #5affd0; font-size: 14px; font-weight: bold;");
+        console.log("%cFirmware · Hardware Debug · BLE · Zigbee · SDR · Side-channel", "color: #b2ffe6;");
+    })();
+</script>
+</body>
+</html>

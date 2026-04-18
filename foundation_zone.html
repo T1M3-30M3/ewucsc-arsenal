@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Foundation Zone | Cyber Security Core Curriculum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0c12, #030507);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* modern glassmorphism + dark matrix vibe */
+        .glow-text {
+            text-shadow: 0 0 5px rgba(0, 255, 196, 0.3);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* header area */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+            padding-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 255, 200, 0.12);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 255, 200, 0.4);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #8effe0;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #8effe0, #2bffb0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #b9c7d9;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .mandatory-flag {
+            background: #1e2a2f;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1.2rem;
+            border-left: 3px solid #2bffb0;
+            color: #bbf0e0;
+        }
+
+        /* grid cards */
+        .foundation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(12, 18, 28, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(46, 204, 164, 0.2);
+            transition: transform 0.2s ease, border-color 0.2s;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+        }
+
+        .card:hover {
+            border-color: rgba(43, 255, 176, 0.6);
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .icon-em {
+            font-size: 2rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem 0;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+            color: #ccdbe9;
+        }
+
+        .topic-list li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            color: #2bffb0;
+            font-size: 0.8rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(46,204,164,0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border: 1px solid #2c3e3c;
+            color: #b2ffe6;
+        }
+
+        .quote-note {
+            background: #07130f;
+            border-left: 4px solid #2bffb0;
+            padding: 1rem 1.3rem;
+            border-radius: 1.2rem;
+            margin: 2rem 0 1rem;
+            font-size: 0.95rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem 0;
+            background: linear-gradient(120deg, #e0f2fe, #b3ffe0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c86a3;
+            border-top: 1px solid rgba(46,204,164,0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #5ef0c0;
+            font-weight: 500;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #2bffb0, transparent);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="badge">⚙️ FOUNDATION ZONE — MANDATORY FOR EVERY MEMBER</div>
+        <h1>Before touching any<br>advanced track</h1>
+        <p>Computer basics, networking, Linux, Python, security mindset — the bedrock of mastery. <br> No shortcuts. Zero fluff.</p>
+        <div class="mandatory-flag">🔐 PREREQUISITE CORE · ZERO EXCEPTIONS</div>
+    </div>
+
+    <!-- 4 pillars grid -->
+    <div class="foundation-grid">
+        <!-- Computer & OS Mastery -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="icon-em">💻</span> Computer & OS Mastery</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>CPU, RAM, Storage architecture, virtualization (VMware/VirtualBox)</li>
+                    <li>Windows & Linux fundamentals: file hierarchy, processes, services</li>
+                    <li>Command line proficiency (bash, PowerShell basics)</li>
+                    <li>Disk partitioning, boot process, environment variables</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">VirtualBox</span>
+                    <span class="tool">WSL2</span>
+                    <span class="tool">Linux CLI</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Networking Essentials -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="icon-em">🌐</span> Networking Essentials</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>OSI & TCP/IP models (deep: encapsulation, MTU)</li>
+                    <li>IP addressing, subnetting, CIDR, NAT, DHCP, DNS resolution</li>
+                    <li>Common ports & protocols (HTTP/HTTPS, FTP, SSH, DNS, SMTP)</li>
+                    <li>Firewalls, ACLs, packet filtering basics</li>
+                    <li>Packet analysis intro (Wireshark filters, tcpdump)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Wireshark</span>
+                    <span class="tool">Nmap</span>
+                    <span class="tool">tcpdump</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Programming for Hackers -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="icon-em">🐍</span> Programming for Hackers</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Python: automation, socket programming, exploit scripting, requests library</li>
+                    <li>C basics: memory management, pointers, buffer overflow understanding</li>
+                    <li>JavaScript: DOM manipulation, XSS payloads, web token tampering</li>
+                    <li>Bash scripting: loops, grep, awk for log analysis</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Python</span>
+                    <span class="tool">GCC</span>
+                    <span class="tool">Node.js</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Mindset & Crypto Basics -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="icon-em">🔐</span> Security Mindset & Crypto</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>CIA Triad, IAAA (Identification, Authentication, Authorization, Accountability)</li>
+                    <li>Symmetric vs Asymmetric encryption, hashing algorithms (MD5, SHA)</li>
+                    <li>Digital signatures, PKI, certificates basics</li>
+                    <li>Risk assessment, threat modeling (STRIDE, DREAD)</li>
+                    <li>Ethical boundaries & responsible disclosure</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">OpenSSL</span>
+                    <span class="tool">hashcat</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- extra deep dive section: foundation zone philosophy -->
+    <div class="quote-note">
+        <span style="font-size:1.4rem; font-weight:700;">📌 WHY FOUNDATION ZONE MATTERS</span><br>
+        Before you touch advanced red teaming, cloud security, or malware analysis — you must internalize these four domains. 
+        Every expert was once a beginner who respected the fundamentals. <span class="highlight">Virtualization, CLI fluency, packet analysis, scripting, and the hacker mindset</span> are non-negotiable.
+        This zone is the gate. Pass it with discipline, then ascend.
+    </div>
+
+    <!-- tools & resources showcase (additional) -->
+    <div>
+        <span class="section-title">⚙️ Core toolchain & environment</span>
+        <div class="badge-row" style="margin-bottom: 1rem;">
+            <span class="tool" style="background:#0a141c;">🐧 Ubuntu / Kali Linux</span>
+            <span class="tool" style="background:#0a141c;">🖥️ Windows Terminal + PowerShell 7</span>
+            <span class="tool" style="background:#0a141c;">🐍 Jupyter / VS Code</span>
+            <span class="tool" style="background:#0a141c;">📡 Wireshark + tshark</span>
+            <span class="tool" style="background:#0a141c;">🧱 GNS3 / Packet Tracer</span>
+            <span class="tool" style="background:#0a141c;">🔑 hashcat / John</span>
+        </div>
+    </div>
+
+    <!-- deeper table-like curriculum / roadmap -->
+    <div style="background: rgba(0,20,16,0.4); border-radius: 2rem; padding: 1.8rem; margin: 2rem 0; border: 1px solid #1b3a33;">
+        <h3 style="display: flex; align-items: center; gap: 10px; font-weight: 700; margin-bottom: 1.2rem;">📖 Foundation Zone — Syllabus Deep Dive</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem;">
+            <div>
+                <strong style="color:#5ef0c0;">🖥️ OS & low-level</strong>
+                <ul style="margin-top: 0.5rem; list-style: none;">
+                    <li>→ BIOS/UEFI, GRUB, init systems</li>
+                    <li>→ /proc, registry, services control</li>
+                    <li>→ process injection concepts (theory)</li>
+                    <li>→ Virtual memory & paging</li>
+                </ul>
+            </div>
+            <div>
+                <strong style="color:#5ef0c0;">🌐 Network internals</strong>
+                <ul style="margin-top: 0.5rem; list-style: none;">
+                    <li>→ ARP spoofing basics (lab)</li>
+                    <li>→ VLANs & trunking</li>
+                    <li>→ iptables/nftables essentials</li>
+                    <li>→ DNS tunneling intro</li>
+                </ul>
+            </div>
+            <div>
+                <strong style="color:#5ef0c0;">🐍 Code & exploits</strong>
+                <ul style="margin-top: 0.5rem; list-style: none;">
+                    <li>→ socket programming (TCP/UDP)</li>
+                    <li>→ fuzzing with Python</li>
+                    <li>→ C buffer overflow demo</li>
+                    <li>→ XSS & CSRF simulation</li>
+                </ul>
+            </div>
+            <div>
+                <strong style="color:#5ef0c0;">🧠 Security mindset</strong>
+                <ul style="margin-top: 0.5rem; list-style: none;">
+                    <li>→ threat modeling workshop</li>
+                    <li>→ password cracking strategies</li>
+                    <li>→ PKI deep dive (CA, certs)</li>
+                    <li>→ responsible disclosure policy</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem;">
+            <div><span class="tool" style="background:#0b241f;">📌 Assessment: CLI CTF + packet quiz + python socket lab</span></div>
+            <div><span class="tool" style="background:#0b241f;">✅ must pass: 85% + practical demonstration</span></div>
+        </div>
+    </div>
+
+    <!-- ethical reminder section -->
+    <div style="background: rgba(0,0,0,0.6); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0 1rem;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">⚖️</span> 
+            <span><strong class="highlight">Ethical boundaries & responsible disclosure</strong> — The Foundation Zone isn't just about technical skills. Respect privacy, follow laws, and always obtain authorization before testing. Hacking is a craft of integrity.</span>
+        </p>
+    </div>
+
+    <!-- progress checklist / interactive look - blog style -->
+    <div style="margin: 2rem 0 1.5rem;">
+        <h3 style="font-size: 1.5rem; font-weight: 600;">📝 Foundation mastery checklist</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem; width: auto;">
+                ✅ Linux file hierarchy & process management
+            </div>
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                ✅ VirtualBox & snapshot workflows
+            </div>
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                ✅ Subnetting & CIDR calculator
+            </div>
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                ✅ Python requests + scapy basics
+            </div>
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                ✅ Bash loops & awk one-liners
+            </div>
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                ✅ Wireshark filters (http, dns, tcp.flags)
+            </div>
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                ✅ OpenSSL enc / dec & hash verification
+            </div>
+            <div style="background: #0e1820; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                ✅ STRIDE model & DREAD ranking
+            </div>
+        </div>
+    </div>
+
+    <!-- community note / blog style quote -->
+    <div style="margin: 3rem 0 1rem; text-align: center; background: linear-gradient(145deg, #05100e, #020908); border-radius: 2rem; padding: 2rem 1rem;">
+        <p style="font-style: italic; font-size: 1.1rem; max-width: 700px; margin: 0 auto; color: #c5f2e5;">"Foundation Zone is the forge where script kiddies are transformed into security engineers. Don't just read — build labs, break stuff, automate, and develop that security reflex."</p>
+        <div style="margin-top: 1rem;">— Foundation Core Team</div>
+    </div>
+
+    <!-- upcoming tracks teaser (optional) -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 2rem;">
+        <div style="background: #0b111c; border-radius: 1.2rem; padding: 1rem 1.2rem; width: auto; flex:1;">
+            <span style="font-weight: 700; font-size: 1rem;">🚀 After Foundation → Red Teaming</span>
+            <div style="font-size:0.8rem; margin-top: 6px;">AD, cobalt strike, evasion</div>
+        </div>
+        <div style="background: #0b111c; border-radius: 1.2rem; padding: 1rem 1.2rem; width: auto; flex:1;">
+            <span style="font-weight: 700; font-size: 1rem;">🛡️ After Foundation → Blue Team</span>
+            <div style="font-size:0.8rem; margin-top: 6px;">SIEM, detection engineering, IR</div>
+        </div>
+        <div style="background: #0b111c; border-radius: 1.2rem; padding: 1rem 1.2rem; width: auto; flex:1;">
+            <span style="font-weight: 700; font-size: 1rem;">🌍 After Foundation → Cloud/AppSec</span>
+            <div style="font-size:0.8rem; margin-top: 6px;">AWS pentesting, API security</div>
+        </div>
+    </div>
+
+    <footer>
+        🧪 Foundation Zone v2.0 — mandatory core curriculum for every member.<br>
+        No shortcuts. Master the fundamentals.  |  #CyberSecurity #Linux #Python #Networking
+    </footer>
+</div>
+
+<!-- optional micro interaction: subtle console style welcome (just for vibe) -->
+<script>
+    (function() {
+        console.log("%c⚡ FOUNDATION ZONE LOADED ⚡", "color: #2bffb0; font-size: 16px; font-weight: bold;");
+        console.log("%cMaster: Computer basics, Networking, Linux, Python, Security Mindset.", "color: #94a3b8; font-size: 12px;");
+        console.log("%c“Before touching any advanced track” — mandatory for every member.", "color: #5ef0c0;");
+    })();
+</script>
+</body>
+</html>

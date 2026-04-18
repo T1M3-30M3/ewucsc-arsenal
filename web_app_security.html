@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Web Application Security | OWASP Top10 & Advanced Attacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0c15, #010101);
+            font-family: 'Inter', sans-serif;
+            color: #eef5ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+            padding-bottom: 2rem;
+        }
+
+        .owasp-badge {
+            display: inline-block;
+            background: rgba(230, 70, 50, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid #ff6a4b;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffa181;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #ffb347, #ff6a4b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbdff2;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #ff6a4b;
+        }
+
+        /* Grid layout */
+        .web-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 100, 70, 0.3);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ff6a4b;
+            box-shadow: 0 20px 30px -12px rgba(255, 70, 0, 0.25);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "🌐";
+            position: absolute;
+            left: 0;
+            color: #ff9f6e;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(255, 106, 75, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #583e34;
+            color: #ffcfb5;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #ff6a4b;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #20120e;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #ffb48a;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #ffd5b5, #ff8c64);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff6a4b, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(255, 106, 75, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #ffa06e;
+            font-weight: 500;
+        }
+
+        .attack-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+            background: #0e1622;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="owasp-badge">🌐 OWASP Top 10 & ADVANCED</div>
+        <h1>Web Application Security<br>Full-Spectrum Attacks</h1>
+        <p>Recon · Injections · XSS · Auth flaws · API security · SSRF · Deserialization — exploit & defend like a pro.</p>
+        <div class="pillars">
+            <span class="pill">🔍 Recon & Asset Discovery</span>
+            <span class="pill">💉 Injection Attacks</span>
+            <span class="pill">🎭 XSS | CSRF | SSRF</span>
+            <span class="pill">🔑 Authentication flaws</span>
+            <span class="pill">⚙️ API & GraphQL</span>
+            <span class="pill">🧩 Deserialization</span>
+        </div>
+    </div>
+
+    <!-- Main Cards Grid: covering all modules -->
+    <div class="web-grid">
+        <!-- Recon & Asset Discovery -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🔎</span> Recon & Asset Discovery</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Subdomain enumeration (Amass, sublist3r, chaos)</li>
+                    <li>Technology fingerprinting (Wappalyzer, whatweb)</li>
+                    <li>Directory/file brute force, JS endpoint extraction</li>
+                    <li>Cloud bucket enumeration, GitHub leaks</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Amass</span>
+                    <span class="tool">Gau</span>
+                    <span class="tool">Katana</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Injection Attacks -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>💉</span> Injection Attacks</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>SQL injection (Union, Boolean, Time-based, out-of-band)</li>
+                    <li>NoSQL injection, LDAP injection, Command injection</li>
+                    <li>XXE — local file read, SSRF, DoS</li>
+                    <li>ORM injection, template injection (SSTI)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">SQLmap</span>
+                    <span class="tool">NoSQLMap</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- XSS, CSRF & SSRF -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🎭</span> XSS, CSRF & SSRF</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Reflected, Stored, DOM-based XSS — advanced payloads, CSP bypass</li>
+                    <li>CSRF token bypass & exploitation</li>
+                    <li>SSRF to internal networks, cloud metadata (IMDSv1/v2)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">XSStrike</span>
+                    <span class="tool">Burp Collaborator</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Authentication & Session flaws -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🔑</span> Authentication & Session</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>JWT attacks (alg none, kid injection, weak secrets)</li>
+                    <li>Brute force protection bypass, credential stuffing</li>
+                    <li>OAuth misconfigurations, insecure password reset</li>
+                    <li>Session fixation, cookie hijacking</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">jwt_tool</span>
+                    <span class="tool">Hydra</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- API & GraphQL Security -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>⚙️</span> API & GraphQL Security</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>API enumeration, mass assignment, IDOR (Insecure Direct Object References)</li>
+                    <li>GraphQL introspection, batching attacks, resource exhaustion</li>
+                    <li>Rate limiting bypass, JWT in APIs</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Postman</span>
+                    <span class="tool">Clairvoyance</span>
+                    <span class="tool">GraphQL Raider</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deserialization & Advanced -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🧩</span> Deserialization & Advanced</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Insecure deserialization (Java, PHP, Python pickles)</li>
+                    <li>Web cache poisoning, HTTP request smuggling</li>
+                    <li>CORS misconfiguration, clickjacking</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Ysoserial</span>
+                    <span class="tool">Turbo Intruder</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: Attack Surface Mindmap -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">⚡</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">Web attack kill chain & OWASP core</span>
+        </div>
+        <div class="attack-flow" style="margin: 1rem 0;">
+            <span>📡 Recon</span> <span>→</span> <span>🔍 Endpoint discovery</span> <span>→</span> <span>🧪 Parameter fuzzing</span> <span>→</span>
+            <span>💉 Injections / XSS / SSRF</span> <span>→</span> <span>🔓 Auth bypass</span> <span>→</span> <span>🏆 Data exfiltration</span>
+        </div>
+        <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <span class="method-badge">A01: Broken Access Control</span>
+            <span class="method-badge">A02: Cryptographic Failures</span>
+            <span class="method-badge">A03: Injection</span>
+            <span class="method-badge">A04: Insecure Design</span>
+            <span class="method-badge">A05: Security Misconfiguration</span>
+            <span class="method-badge">A06: Vulnerable Components</span>
+            <span class="method-badge">A07: Auth & Session flaws</span>
+        </div>
+    </div>
+
+    <!-- Advanced Techniques & Tooling Showcase -->
+    <div>
+        <span class="section-title">🧰 Weaponizing Web Attacks — Advanced Arsenal</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔎 Recon automation</strong>
+                <div style="font-size: 0.8rem;">Amass + Subfinder + Httpx + Katana → attack surface mapping</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">💉 Advanced SQLi</strong>
+                <div style="font-size: 0.8rem;">Out-of-band exfiltration, bypass WAF using NoSQL & SQLmap tamper scripts</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🎭 XSS payloads</strong>
+                <div style="font-size: 0.8rem;">CSP bypass via dangling markup, DOM clobbering, and AngularJS sandbox escapes</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔑 JWT exploitation</strong>
+                <div style="font-size: 0.8rem;">alg: none, kid path traversal, JKU confusion, weak HMAC secrets</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SSRF + Cloud Metadata + API deep dive -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🌩️ SSRF to Cloud Metadata</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ AWS: http://169.254.169.254/latest/meta-data/</li>
+                <li>→ GCP: http://metadata.google.internal/computeMetadata/v1/</li>
+                <li>→ Azure: http://169.254.169.254/metadata/instance?api-version=2017-08-01</li>
+                <li>→ Internal network scanning, port scanning via blind SSRF</li>
+                <li>→ Protocol smuggling (gopher://, file://, dict://)</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">SSRFmap</span>
+                <span class="tool">Burp Suite</span>
+            </div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🔓 GraphQL & IDOR playground</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>🔹 Introspection queries to leak schema</li>
+                <li>🔹 Batching attacks to bypass rate limiting</li>
+                <li>🔹 IDOR via incrementing object IDs in REST/GraphQL</li>
+                <li>🔹 Mass assignment — add unexpected fields (e.g., isAdmin=true)</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">GraphQL Voyager</span>
+                <span class="tool">Clairvoyance</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deserialization & Request Smuggling -->
+    <div class="deep-section" style="background: #0a131f;">
+        <h3 style="margin-bottom: 1rem;">🧩 Deserialization & HTTP Request Smuggling — Critical Advanced Attacks</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem;">
+            <div>
+                <span class="highlight">💣 Java Deserialization</span>
+                <div style="font-size: 0.85rem;">ysoserial, RMI, CommonsCollections gadgets</div>
+            </div>
+            <div>
+                <span class="highlight">🐍 Python pickle</span>
+                <div style="font-size: 0.85rem">__reduce__ RCE, insecure pickle loading</div>
+            </div>
+            <div>
+                <span class="highlight">📦 PHP Object Injection</span>
+                <div style="font-size: 0.85rem">unserialize() + gadget chains (laravel, monolog)</div>
+            </div>
+            <div>
+                <span class="highlight">🚬 HTTP Smuggling</span>
+                <div style="font-size: 0.85rem">CL.TE / TE.CL vulnerabilities, request queue poisoning</div>
+            </div>
+        </div>
+        <hr>
+        <div><span class="tool">ysoserial</span> <span class="tool">PHPGGC</span> <span class="tool">Turbo Intruder</span> <span class="tool">smuggler</span></div>
+    </div>
+
+    <!-- API Security & Tools Cheatsheet -->
+    <div style="margin: 2rem 0;">
+        <span class="section-title">⚙️ API Security Testing Checklist</span>
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+                <div><span class="method-badge">✅ Check for IDOR in object references</span></div>
+                <div><span class="method-badge">✅ JWT signature validation bypass</span></div>
+                <div><span class="method-badge">✅ GraphQL introspection enabled</span></div>
+                <div><span class="method-badge">✅ Rate limiting / Brute force protection</span></div>
+                <div><span class="method-badge">✅ Mass assignment (unexpected fields)</span></div>
+                <div><span class="method-badge">✅ Verb tampering & HTTP method override</span></div>
+            </div>
+            <div class="tools-tag" style="margin-top: 1.2rem;">
+                <span class="tool">Postman</span>
+                <span class="tool">Burp Suite (API tab)</span>
+                <span class="tool">Kiterunner</span>
+                <span class="tool">GraphQL Raider</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Responsible disclosure and Ethical Note -->
+    <div style="background: rgba(255, 80, 50, 0.1); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">⚠️</span>
+            <span><strong class="highlight">Ethical Testing & Authorization</strong> — All techniques described are for authorized security assessments, CTFs, and bug bounty programs. Never exploit without permission. Understand impact, get consent, report responsibly.</span>
+        </p>
+    </div>
+
+    <!-- Final Call to Action / blog style -->
+    <div style="text-align: center; background: linear-gradient(145deg, #0a0f1a, #02070e); border-radius: 2rem; padding: 1.5rem; margin-top: 1rem;">
+        <span style="font-weight: 700;">🌐 Web App Security is a battlefield — master recon, injection, auth flaws, and advanced deserialization.</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">OWASP Top10 · API testing · SSRF to cloud · GraphQL hacking</div>
+    </div>
+
+    <footer>
+        🌐 WEB APPLICATION SECURITY — Full-spectrum: OWASP Top10, Injections, XSS, SSRF, JWT attacks, API & GraphQL, Deserialization, Smuggling.<br>
+        Advanced training for ethical hackers & bug bounty hunters.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c🌐 Web Application Security Module Loaded", "color: #ff9f6e; font-size: 14px; font-weight: bold;");
+        console.log("%cOWASP Top10 · Injections · XSS · SSRF · GraphQL · Deserialization", "color: #bbd4ff;");
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>APT — Advanced Persistent Threats | Groups · Tradecraft · Emulation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a0c12, #010101);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(200, 50, 80, 0.5);
+            padding-bottom: 2rem;
+        }
+
+        .apt-badge {
+            display: inline-block;
+            background: rgba(220, 30, 60, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid #d43f6b;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ff8aad;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #ff8aad, #d43f6b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbdff2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #d43f6b;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(212, 63, 107, 0.35);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #d43f6b;
+            box-shadow: 0 20px 30px -12px rgba(212, 63, 107, 0.3);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+            color: #ff8aad;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(212, 63, 107, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #6e2e46;
+            color: #ffb8cc;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #d43f6b;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #1e1218;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #ffb8cc;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #ffe0e6, #ff8aad);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d43f6b, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(212, 63, 107, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 { font-size: 2.2rem; }
+            .container { padding: 1rem; }
+        }
+
+        .highlight { color: #ff8aad; font-weight: 500; }
+        .apt-matrix {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="apt-badge">🎯 ADVANCED PERSISTENT THREATS</div>
+        <h1>APT Groups · Tradecraft · Emulation & Intel</h1>
+        <p>State-sponsored threat actors · TTPs · Detection · Threat intelligence · Adversary simulation</p>
+        <div class="pillars">
+            <span class="pill">🔪 Known APT Groups</span>
+            <span class="pill">📡 Tradecraft & TTPs</span>
+            <span class="pill">🛡️ Detection & Intel</span>
+            <span class="pill">⚔️ Emulation Frameworks</span>
+        </div>
+    </div>
+
+    <!-- Two Main Sections: Groups & Tradecraft -->
+    <div class="grid-2col">
+        <!-- Known APT Groups -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🔪</span> Notable APT Groups</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>APT28 (Fancy Bear) — Russia, political/Gov targeting, Sofacy</li>
+                    <li>APT29 (Cozy Bear) — Russia, Nobelium, SolarWinds backdoor</li>
+                    <li>APT41 (Barium) — China, gaming, healthcare, double threat</li>
+                    <li>Lazarus Group — North Korea, crypto heists, ransomware</li>
+                    <li>OilRig — Iran, Middle East energy sector</li>
+                    <li>Turla (Snake) — Russia, diplomatic espionage, satellite C2</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">MITRE ATT&CK Navigator</span>
+                    <span class="tool">APT Reports (CrowdStrike, Mandiant)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- APT Tradecraft & TTPs -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>📡</span> Common APT Tradecraft</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Spear-phishing with custom malware, document macros</li>
+                    <li>Living-off-the-land (LOLBins, PowerShell, WMI)</li>
+                    <li>Custom C2 protocols (HTTPS, DNS, email, satellite links)</li>
+                    <li>Long-term persistence (registry, scheduled tasks, services)</li>
+                    <li>Data exfiltration via encrypted channels (HTTPS, SMB, RDP)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Cobalt Strike</span>
+                    <span class="tool">PoshC2</span>
+                    <span class="tool">Sliver</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: APT Attack Lifecycle -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">🔄</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">APT Attack Lifecycle (Beyond Kill Chain)</span>
+        </div>
+        <div style="margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+            <span class="method-badge">1️⃣ Recon (OSINT, supply chain)</span>
+            <span class="method-badge">2️⃣ Initial Access (Spear-phish, 0-day)</span>
+            <span class="method-badge">3️⃣ Foothold (Backdoor, C2 beacon)</span>
+            <span class="method-badge">4️⃣ Discovery (BloodHound, AdFind)</span>
+            <span class="method-badge">5️⃣ Lateral Movement (PsExec, SMB, RDP)</span>
+            <span class="method-badge">6️⃣ Persistence (Schedule tasks, service)</span>
+            <span class="method-badge">7️⃣ Collection & Exfiltration</span>
+        </div>
+        <div class="tools-tag" style="margin-top: 0.5rem;">
+            <span class="tool">Cobalt Strike (Beacon)</span>
+            <span class="tool">Mythic (Apfell)</span>
+            <span class="tool">BloodHound (AD enumeration)</span>
+        </div>
+        <div class="warning-note" style="background: #1e1218; border-radius: 1rem; padding: 0.8rem; margin-top: 1rem;">
+            💡 <span class="highlight">APT distinction:</span> Unlike commodity malware, APTs are stealthy, persistent, and manually operated. They can stay dormant for months.
+        </div>
+    </div>
+
+    <!-- APT Emulation & Detection -->
+    <div>
+        <span class="section-title">⚔️ APT Emulation — Simulating State-Sponsored Adversaries</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📦 APT Emulation Frameworks</strong>
+                <div style="font-size: 0.8rem;">Caldera (APT3, APT29 profiles) · Atomic Red Team · Infection Monkey · Stratus Red Team (cloud)</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔍 Threat Intelligence Feeds</strong>
+                <div style="font-size: 0.8rem;">MISP · AlienVault OTX · CrowdStrike Intel · Recorded Future · MITRE ATT&CK Groups</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🛡️ Detecting APT Tradecraft</strong>
+                <div style="font-size: 0.8rem;">Sigma rules for APT29 · YARA for Turla malware · Sysmon logs (ProcessCreate, NetworkConnect)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notable APT Campaigns Deep Dive -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🔥 SolarWinds (APT29 / Nobelium)</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ Supply chain compromise of Orion platform</li>
+                <li>→ Sunburst backdoor (C2 via legitimate domains)</li>
+                <li>→ Teardrop malware, manual lateral movement</li>
+                <li>→ Detection: anomalous DNS, unexpected service behavior</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;"><span class="tool">MITRE Technique: T1195.001</span></div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">💰 Lazarus Group — WannaCry & Crypto Heists</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ WannaCry ransomware (EternalBlue exploit)</li>
+                <li>→ AppleJeus — cryptocurrency exchange malware</li>
+                <li>→ Hidden Cobra — DDoS botnets</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;"><span class="tool">Sigma: wannacry_detection</span></div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🇨🇳 APT41 — Double Threat</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ Gaming industry backdoors</li>
+                <li>→ Supply chain compromises</li>
+                <li>→ Data theft + destructive wipers</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;"><span class="tool">TTP: BazarCall, BumbleBee</span></div>
+        </div>
+    </div>
+
+    <!-- APT Malware Families & Tooling -->
+    <div class="deep-section" style="background: #0a131f;">
+        <h3 style="margin-bottom: 1rem;">🧪 Notable APT Malware Families</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem;">
+            <div><span class="highlight">Sunburst</span> (SolarWinds backdoor)</div>
+            <div><span class="highlight">Trickbot</span> (modular banking trojan, APT29)</div>
+            <div><span class="highlight">Drovorub</span> (Russian Linux rootkit)</div>
+            <div><span class="highlight">Komplex</span> (macOS backdoor, APT28)</div>
+            <div><span class="highlight">Chimera</span> (Turla, document droppers)</div>
+            <div><span class="highlight">AppleJeus</span> (Lazarus, macOS crypto)</div>
+        </div>
+        <hr>
+        <div class="tools-tag">
+            <span class="tool">YARA signatures</span>
+            <span class="tool">CAPE Sandbox</span>
+            <span class="tool">VirusTotal Intelligence</span>
+        </div>
+    </div>
+
+    <!-- Threat Intelligence & Attribution -->
+    <div style="margin: 2rem 0;">
+        <span class="section-title">📊 Threat Intelligence — Attribution & Tracking</span>
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div class="apt-matrix">
+                <span class="method-badge">🔹 MITRE ATT&CK Groups (100+)</span>
+                <span class="method-badge">🔹 Dragos (ICS APT tracking)</span>
+                <span class="method-badge">🔹 CrowdStrike Falcon OverWatch</span>
+                <span class="method-badge">🔹 Mandiant APT1 report</span>
+            </div>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">MISP</span>
+                <span class="tool">OpenCTI</span>
+                <span class="tool">YETI (Yeti Enterprise Threat Intelligence)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- APT Detection Playbook -->
+    <div class="deep-section" style="background: #0a111c;">
+        <span style="font-weight: 800; font-size: 1.2rem;">🛡️ APT Detection Playbook (Blue Team)</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 0.8rem; margin-top: 1rem;">
+            <div>🔸 Beaconing detection (periodic DNS/HTTPS)</div>
+            <div>🔸 Unusual process parent-child relationships</div>
+            <div>🔸 Lateral movement tools (PsExec, WMI)</div>
+            <div>🔸 Abnormal PowerShell execution</div>
+            <div>🔸 Registry persistence modifications</div>
+            <div>🔸 Data staging (large file archives)</div>
+        </div>
+        <div class="warning-note" style="margin-top: 1rem;">
+            🧠 <span class="highlight">Proactive hunting:</span> Hunt for Living-off-the-land (LOLBins), unusual scheduled tasks, and service creation.
+        </div>
+    </div>
+
+    <!-- APT Emulation in Purple Team -->
+    <div style="background: rgba(212, 63, 107, 0.1); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">🎭</span>
+            <span><strong class="highlight">Purple Team APT Emulation</strong> — Use Caldera's APT profiles to test defenses against specific groups. Validate Sigma rules, train SOC analysts on real APT tradecraft.</span>
+        </p>
+    </div>
+
+    <!-- APT Training & Resources -->
+    <div style="text-align: center; background: linear-gradient(145deg, #0a0f1a, #02070e); border-radius: 2rem; padding: 1.5rem; margin-top: 1rem;">
+        <span style="font-weight: 700;">🎓 APT Learning Resources</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">MITRE ATT&CK · APT reports (CrowdStrike, Mandiant, Kaspersky) · SANS FOR578 · Caldera APT simulations</div>
+    </div>
+
+    <footer>
+        🎯 ADVANCED PERSISTENT THREATS — State-sponsored groups, tradecraft, emulation frameworks, detection strategies, threat intelligence.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c🎯 APT Module Loaded — Advanced Persistent Threats", "color: #ff8aad; font-size: 14px; font-weight: bold;");
+        console.log("%cAPT28 · APT29 · Lazarus · Turla · SolarWinds · Caldera Emulation", "color: #ffb8cc;");
+    })();
+</script>
+</body>
+</html>

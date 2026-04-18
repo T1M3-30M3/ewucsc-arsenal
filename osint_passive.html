@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>OSINT — Full Spectrum Open Source Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #0a0c14, #020408);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(100, 180, 250, 0.3);
+            padding-bottom: 2rem;
+        }
+
+        .osint-badge {
+            display: inline-block;
+            background: rgba(50, 150, 255, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid #3b82f6;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #7ab7ff;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #7ab7ff, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #c9def5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #3b82f6;
+        }
+
+        /* Card Grid */
+        .osint-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 30px -12px rgba(59, 130, 246, 0.25);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "🕵️";
+            position: absolute;
+            left: 0;
+            color: #7ab7ff;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(59, 130, 246, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #2c4c6e;
+            color: #bbdbff;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #101b2a;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #8bb9ff;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #c5e0ff, #5d9eff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #7ab7ff;
+            font-weight: 500;
+        }
+
+        .dark-icon {
+            color: #b080ff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="osint-badge">🕵️ OSINT — OPEN SOURCE INTELLIGENCE</div>
+        <h1>Full Spectrum<br>Passive Reconnaissance</h1>
+        <p>People · Domains · Emails · Social Media · Geolocation · Dark Web — gather intelligence ethically, uncover hidden connections.</p>
+        <div class="pillars">
+            <span class="pill">🌍 Domain & Infrastructure</span>
+            <span class="pill">👤 People & Social Intel</span>
+            <span class="pill">🗺️ Geolocation & Imagery</span>
+            <span class="pill">🌑 Dark Web & Archives</span>
+        </div>
+    </div>
+
+    <!-- Four core OSINT modules -->
+    <div class="osint-grid">
+        <!-- Domain & Infrastructure OSINT -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🌍</span> Domain & Infrastructure</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>WHOIS, DNS records (A, MX, TXT, NS), reverse DNS</li>
+                    <li>SSL/TLS certificate transparency (crt.sh, CertSpotter)</li>
+                    <li>Shodan, Censys, ZoomEye for exposed devices/services</li>
+                    <li>ASN & IP range mapping (BGP tools)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">theHarvester</span>
+                    <span class="tool">dnsrecon</span>
+                    <span class="tool">Shodan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- People & Social Media Intel -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>👤</span> People & Social Media</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Username correlation across platforms (Sherlock, Maigret)</li>
+                    <li>Email enumeration & breach data (Dehashed, HaveIBeenPwned)</li>
+                    <li>Social scraping (Twitter, LinkedIn, Instagram) – ethical only</li>
+                    <li>Metadata in public documents (PDF, Office files)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Maltego</span>
+                    <span class="tool">Recon-ng</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geolocation & Imagery -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🗺️</span> Geolocation & Imagery</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>EXIF data extraction from images, reverse image search (Google, Yandex)</li>
+                    <li>Geolocation via landmarks, street view (OSINT geolocation CTFs)</li>
+                    <li>Satellite imagery analysis (Google Earth, Sentinel Hub)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">ExifTool</span>
+                    <span class="tool">GeoHint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dark Web & Archives -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🌑</span> Dark Web & Archives</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Wayback Machine (historical web pages, deleted content)</li>
+                    <li>Pastebin & code repository dumps, Telegram OSINT</li>
+                    <li>Onion sites enumeration (Ahmia, Torch)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Tor</span>
+                    <span class="tool">OnionSearch</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: Domain & Certificate Intelligence -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">🔍</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">Certificate Transparency & Infrastructure Mapping</span>
+        </div>
+        <div style="margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.8rem;">
+            <span class="method-badge">crt.sh — subdomain discovery via SSL logs</span>
+            <span class="method-badge">CertSpotter monitoring</span>
+            <span class="method-badge">Shodan filters: ssl.cert.subject.CN</span>
+            <span class="method-badge">ASN to IP range (bgp.he.net)</span>
+        </div>
+        <div class="tools-tag" style="margin-top: 0.5rem;">
+            <span class="tool">Amass (intel mode)</span>
+            <span class="tool">Censys</span>
+            <span class="tool">SecurityTrails</span>
+        </div>
+    </div>
+
+    <!-- People OSINT Tool Matrix -->
+    <div>
+        <span class="section-title">👤 People & Identity Correlation Playbook</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📧 Email OSINT</strong>
+                <div style="font-size: 0.8rem;">Hunter.io, EmailRep, Dehashed, BreachParse — verify leaks, social accounts linked.</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">👤 Username correlation</strong>
+                <div style="font-size: 0.8rem;">Sherlock, Maigret, Whatsmyname — cross 300+ platforms, map digital footprint.</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📄 Metadata analysis</strong>
+                <div style="font-size: 0.8rem;">ExifTool, FOCA — PDF/Office hidden authors, GPS coordinates, edit history.</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🌐 Social scraping (ethical)</strong>
+                <div style="font-size: 0.8rem;">Toutatis, Twint (archival), LinkedIn without login — OSINT research only.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Geolocation & Imagery deep dive -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🗺️ Geolocation Techniques</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ EXIF coordinates extraction (GPS from images)</li>
+                <li>→ Reverse image search + landmark triangulation</li>
+                <li>→ Street view & shadow analysis for timestamp</li>
+                <li>→ Satellite imagery comparison (Sentinel Hub, Google Earth Engine)</li>
+                <li>→ OSINT geolocation CTFs: geohints.com, mapillary</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">ExifTool</span>
+                <span class="tool">Google Earth Pro</span>
+                <span class="tool">Pic2Map</span>
+            </div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">📸 Reverse Image Search</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>🔹 Google Images (drag & drop, URL search)</li>
+                <li>🔹 Yandex Images — best for face/location recognition</li>
+                <li>🔹 Bing Visual Search, TinEye</li>
+                <li>🔹 Pimeyes (facial recognition, ethical usage)</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">TinEye</span>
+                <span class="tool">Yandex</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Web & Archive Intelligence -->
+    <div class="deep-section" style="background: #0a131f;">
+        <h3 style="margin-bottom: 1rem;">🌑 Dark Web & Historical Recon — Uncover the Invisible</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 1rem;">
+            <div>
+                <span class="highlight">📜 Wayback Machine</span>
+                <div style="font-size: 0.85rem;">archive.org — retrieve deleted pages, JS endpoints, old config files</div>
+            </div>
+            <div>
+                <span class="highlight">📋 Pastebin dorks</span>
+                <div style="font-size: 0.85rem">Psbdmp, Pastebin scraping for credentials, API keys</div>
+            </div>
+            <div>
+                <span class="highlight">🧅 Onion search engines</span>
+                <div style="font-size: 0.85rem">Ahmia, Torch, DarkSearch — index .onion services</div>
+            </div>
+            <div>
+                <span class="highlight">💬 Telegram OSINT</span>
+                <div style="font-size: 0.85rem">Telegago, Telegram API — monitor public channels for leaks</div>
+            </div>
+        </div>
+        <hr>
+        <div><span class="tool">Tor Browser</span> <span class="tool">OnionSearch</span> <span class="tool">Wayback CDX API</span> <span class="tool">Telegram OSINT Bot</span></div>
+    </div>
+
+    <!-- OSINT Automation & Frameworks -->
+    <div style="margin: 2rem 0;">
+        <span class="section-title">⚙️ OSINT Automation & All-in-One Frameworks</span>
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start;">
+                <span class="method-badge">🔧 Recon-ng — modules for DNS, contacts, profiles</span>
+                <span class="method-badge">🐍 SpiderFoot — automated threat intelligence</span>
+                <span class="method-badge">📡 theHarvester — emails, subdomains, PGP keys</span>
+                <span class="method-badge">🧩 Maltego — graph-based link analysis</span>
+                <span class="method-badge">🌐 Sn1per — recon + automation</span>
+            </div>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">SpiderFoot CLI</span>
+                <span class="tool">OSINT Framework (osintframework.com)</span>
+                <span class="tool">Holmes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- OSINT Ethical Guidelines + Responsible Use -->
+    <div style="background: rgba(59, 130, 246, 0.1); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">⚖️</span>
+            <span><strong class="highlight">Ethical OSINT & Legal Boundaries</strong> — Only collect publicly available data. Respect privacy, platform ToS, and never use for harassment or illegal activity. OSINT for security research, defense, and investigations only.</span>
+        </p>
+    </div>
+
+    <!-- OSINT Workflow / Methodology Card -->
+    <div style="text-align: center; background: linear-gradient(145deg, #0a0f1a, #02070e); border-radius: 2rem; padding: 1.5rem; margin-top: 1rem;">
+        <span style="font-weight: 700;">🕵️ Full OSINT Loop: Target -> Discovery -> Correlation -> Verification -> Intelligence Report</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">Passive · Non-intrusive · Actionable intelligence</div>
+    </div>
+
+    <!-- Additional Tool Showcase -->
+    <div style="margin: 2rem 0 0.5rem;">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+            <span class="tool">Creepy (geolocation)</span>
+            <span class="tool">PhoneInfoga</span>
+            <span class="tool">Holehe</span>
+            <span class="tool">WhatsMyName</span>
+            <span class="tool">BuiltWith</span>
+            <span class="tool">DNSdumpster</span>
+        </div>
+    </div>
+
+    <footer>
+        🕵️ OSINT — Open Source Intelligence (full spectrum) · Passive recon: domains, people, social, geolocation, dark web, archives.<br>
+        Know thy enemy — legally and ethically.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c🕵️ OSINT Full Spectrum Module Active", "color: #5d9eff; font-size: 14px; font-weight: bold;");
+        console.log("%cDomains · People · Geolocation · Dark Web | Ethical intelligence gathering", "color: #aac9ff;");
+    })();
+</script>
+</body>
+</html>

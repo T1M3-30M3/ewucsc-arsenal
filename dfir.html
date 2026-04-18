@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Digital Forensics & Incident Response | DFIR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 10%, #0a0c12, #020408);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 160, 50, 0.4);
+            padding-bottom: 2rem;
+        }
+
+        .dfir-badge {
+            display: inline-block;
+            background: rgba(255, 120, 30, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid #ff9f4a;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffb870;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #ffb870, #ff7a2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #c9e0f5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #ff9f4a;
+        }
+
+        .dfir-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 130, 50, 0.35);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ff9f4a;
+            box-shadow: 0 20px 30px -12px rgba(255, 100, 0, 0.3);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "🔍";
+            position: absolute;
+            left: 0;
+            color: #ffb870;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(255, 130, 50, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #6e4a2e;
+            color: #ffcf9f;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #ff9f4a;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #1e1a12;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #ffcf9f;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #ffe0c5, #ffb870);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff9f4a, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(255, 130, 50, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #ffb870;
+            font-weight: 500;
+        }
+
+        .warning-note {
+            background: #0e161c;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .incident-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+            background: #0e1622;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="dfir-badge">🔍 DIGITAL FORENSICS & INCIDENT RESPONSE</div>
+        <h1>Disk · Memory · Network · Mobile Forensics</h1>
+        <p>Evidence preservation · Timeline analysis · Malware hunting · Incident investigation</p>
+        <div class="pillars">
+            <span class="pill">💽 Disk & File System</span>
+            <span class="pill">🧠 Memory Forensics</span>
+            <span class="pill">🌐 Network Forensics</span>
+            <span class="pill">📱 Mobile & Cloud</span>
+        </div>
+    </div>
+
+    <!-- Four Core Domains Grid -->
+    <div class="dfir-grid">
+        <!-- Disk & File System Forensics -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>💽</span> Disk & File System</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Acquisition: DD, FTK Imager, EWF formats</li>
+                    <li>File carving (foremost, scalpel), recovering deleted files</li>
+                    <li>NTFS $MFT analysis, EXT4 journal, FAT artifacts</li>
+                    <li>Timeline analysis (Plaso, log2timeline)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Autopsy</span>
+                    <span class="tool">Sleuth Kit</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory Forensics -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🧠</span> Memory Forensics</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>RAM acquisition (LiME, winpmem)</li>
+                    <li>Process list, hidden processes, DLL injection detection</li>
+                    <li>Network connections, registry from memory</li>
+                    <li>Malware rootkit detection, YARA scanning</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Volatility3</span>
+                    <span class="tool">Rekall</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Forensics -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🌐</span> Network Forensics</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>PCAP analysis: TCP stream reconstruction, TLS decryption (with keys)</li>
+                    <li>Zeek (Bro) logs, metadata extraction</li>
+                    <li>Detecting C2 traffic, exfiltration patterns</li>
+                    <li>Wireshark advanced filters, tshark scripting</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Wireshark</span>
+                    <span class="tool">Zeek</span>
+                    <span class="tool">tshark</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile & Cloud Forensics -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>📱</span> Mobile & Cloud Forensics</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Android logical & physical extraction (ADB, Cellebrite basics)</li>
+                    <li>iOS backups analysis, plist parsing</li>
+                    <li>Cloud artifact collection (AWS CloudTrail, Google Takeout)</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Magnet AXIOM</span>
+                    <span class="tool">iOS Analyzer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: Disk Forensics & Timeline Analysis -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">📅</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">Timeline Analysis & Artifact Correlation</span>
+        </div>
+        <div class="incident-flow" style="margin: 1rem 0;">
+            <span>🔹 Acquisition (dd, E01)</span> <span>→</span>
+            <span>🔹 File carving (foremost)</span> <span>→</span>
+            <span>🔹 $MFT / Journal parse</span> <span>→</span>
+            <span>🔹 Plaso timeline</span> <span>→</span>
+            <span>🔹 Correlation (LNK, Prefetch, Shimcache)</span>
+        </div>
+        <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <span class="method-badge">📁 NTFS $MFT: timestamps, file creation, deletion</span>
+            <span class="method-badge">📋 Prefetch (Windows) — program execution history</span>
+            <span class="method-badge">🖥️ Shimcache — application compatibility evidence</span>
+            <span class="method-badge">📄 LNK files — recently accessed documents</span>
+        </div>
+        <div class="tools-tag" style="margin-top: 1rem;">
+            <span class="tool">Plaso (log2timeline)</span>
+            <span class="tool">Timeline Explorer (SANS)</span>
+        </div>
+        <div class="warning-note">
+            💡 <span class="highlight">Pro tip:</span> Always work on a write-blocked forensic image. Hash verification (MD5/SHA256) ensures evidence integrity before analysis.
+        </div>
+    </div>
+
+    <!-- Memory Forensics Deep Dive -->
+    <div>
+        <span class="section-title">🧠 Memory Forensics with Volatility — Live Investigation</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📋 Process Analysis</strong>
+                <div style="font-size: 0.8rem;">vol -f mem.raw windows.pslist → detect hidden processes (psscan, malfind)</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🌐 Network Artifacts</strong>
+                <div style="font-size: 0.8rem;">windows.netscan → active connections, listening ports, injected DLLs</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔑 Registry from Memory</strong>
+                <div style="font-size: 0.8rem;">hivelist, hivedump — SAM, SYSTEM, SOFTWARE, userassist, run keys</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🧬 Malware Detection</strong>
+                <div style="font-size: 0.8rem;">malfind (injection), yarascan, modscan (kernel modules), drivers</div>
+            </div>
+        </div>
+        <div class="tools-tag" style="justify-content: center;">
+            <span class="tool">volatility3 -f dump.mem windows.psscan</span>
+            <span class="tool">vol -f mem.raw windows.cmdline</span>
+        </div>
+    </div>
+
+    <!-- Network Forensics & PCAP Analysis -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🌐 PCAP Forensics Workflow</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ tcpdump / tshark capture → analyze with Wireshark</li>
+                <li>→ TCP stream reconstruction (Follow TCP Stream)</li>
+                <li>→ TLS decryption using server private keys or session keys</li>
+                <li>→ Zeek logs (conn.log, http.log, dns.log) for metadata</li>
+                <li>→ Detect C2 beacons: periodic timing, JA3 fingerprints</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">tshark -r capture.pcap -Y "http.request"</span>
+                <span class="tool">ngrep</span>
+                <span class="tool">NetworkMiner</span>
+            </div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">🔍 Zeek (Bro) — Network Meta-Forensics</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>🔹 conn.log — connection summaries, duration, bytes</li>
+                <li>🔹 http.log — URIs, user-agents, hosts</li>
+                <li>🔹 dns.log — all queries, responses, TLD extraction</li>
+                <li>🔹 files.log — extracted transferred files</li>
+                <li>🔹 notice.log — anomaly detection (port scanning, C2)</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">zeek-cut</span>
+                <span class="tool">RITA (Black Hills)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Forensics Artifacts -->
+    <div class="deep-section" style="background: #0a131f;">
+        <h3 style="margin-bottom: 1rem;">📱 Mobile Forensics — Key Artifacts</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem;">
+            <div>
+                <span class="highlight">🤖 Android</span>
+                <div style="font-size: 0.85rem;">ADB logical backup, /data/data/ (app databases), call logs, SMS, WhatsApp, location history</div>
+            </div>
+            <div>
+                <span class="highlight">🍎 iOS</span>
+                <div style="font-size: 0.85rem">iTunes backups (manifest.plist), keychain, WhatsApp/Telegram, SMS.db, photos</div>
+            </div>
+            <div>
+                <span class="highlight">☁️ Cloud Artifacts</span>
+                <div style="font-size: 0.85rem">Google Takeout (location, search, drive), AWS CloudTrail logs, iCloud backups</div>
+            </div>
+        </div>
+        <hr>
+        <div class="tools-tag">
+            <span class="tool">Android Forensic Toolkit (AFT)</span>
+            <span class="tool">iOS Analyzer</span>
+            <span class="tool">Cellebrite UFED (commercial)</span>
+        </div>
+    </div>
+
+    <!-- Incident Response Lifecycle -->
+    <div style="margin: 2rem 0;">
+        <span class="section-title">🚨 Incident Response Lifecycle (NIST SP 800-61)</span>
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center;">
+                <span class="method-badge">1️⃣ Preparation</span>
+                <span class="method-badge">2️⃣ Detection & Analysis</span>
+                <span class="method-badge">3️⃣ Containment (short/long term)</span>
+                <span class="method-badge">4️⃣ Eradication</span>
+                <span class="method-badge">5️⃣ Recovery</span>
+                <span class="method-badge">6️⃣ Post-Incident (lessons learned)</span>
+            </div>
+            <div class="warning-note" style="margin-top: 1rem;">
+                🛡️ <span class="highlight">IR critical tools:</span> EDR telemetry (CrowdStrike, SentinelOne), SIEM (Splunk, ELK), Velociraptor for live triage.
+            </div>
+        </div>
+    </div>
+
+    <!-- Forensic Acquisition Best Practices -->
+    <div class="deep-section" style="background: #0a111c;">
+        <span style="font-weight: 800; font-size: 1.2rem;">📦 Evidence Preservation — Order of Volatility</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 0.6rem; margin-top: 1rem;">
+            <div><span class="highlight">1. RAM / Registers</span> — most volatile</div>
+            <div><span class="highlight">2. Network state</span> — connections, routing</div>
+            <div><span class="highlight">3. Running processes</span> — handles, DLLs</div>
+            <div><span class="highlight">4. Disk (journal, swap)</span> — slack space</div>
+            <div><span class="highlight">5. Remote logs</span> — SIEM, syslog</div>
+            <div><span class="highlight">6. Backups / archives</span> — least volatile</div>
+        </div>
+        <div class="tools-tag" style="margin-top: 1rem;">
+            <span class="tool">Write blocker (hardware)</span>
+            <span class="tool">FTK Imager (E01)</span>
+            <span class="tool">dcfldd (hash on the fly)</span>
+        </div>
+    </div>
+
+    <!-- DFIR Toolchain Summary -->
+    <div style="margin: 2rem 0;">
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem;">
+            <div style="text-align: center; font-weight: 700; margin-bottom: 0.8rem;">🧰 Complete DFIR Arsenal</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                <span class="tool">Autopsy</span> <span class="tool">Sleuth Kit</span> <span class="tool">Volatility</span>
+                <span class="tool">Rekall</span> <span class="tool">Wireshark</span> <span class="tool">Zeek</span>
+                <span class="tool">tshark</span> <span class="tool">Plaso</span> <span class="tool">FTK Imager</span>
+                <span class="tool">Magnet AXIOM</span> <span class="tool">Cellebrite</span> <span class="tool">Velociraptor</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ethical & Legal Reminder -->
+    <div style="background: rgba(255, 130, 50, 0.1); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">⚖️</span>
+            <span><strong class="highlight">Legal & Chain of Custody</strong> — Forensic investigations must follow lawful authorization. Maintain detailed logs of every action. Evidence integrity is paramount: hash verification, write-blockers, and tamper-proof documentation.</span>
+        </p>
+    </div>
+
+    <!-- Learning Path Summary -->
+    <div style="text-align: center; background: linear-gradient(145deg, #0a0f1a, #02070e); border-radius: 2rem; padding: 1.5rem; margin-top: 1rem;">
+        <span style="font-weight: 700;">🔍 DFIR Mastery: Acquisition → Timeline → Memory → Network → Mobile → Reporting</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">Tools: Autopsy · Volatility · Wireshark · Zeek · Plaso · FTK Imager</div>
+    </div>
+
+    <footer>
+        🔍 DIGITAL FORENSICS & INCIDENT RESPONSE — Disk, memory, network, mobile forensics. Evidence preservation, timeline analysis, malware hunting.<br>
+        Scientifically examine, ethically respond.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c🔍 DFIR Module Loaded — Digital Forensics & Incident Response", "color: #ffb870; font-size: 14px; font-weight: bold;");
+        console.log("%cDisk · Memory · Network · Mobile | Volatility · Autopsy · Wireshark · Zeek", "color: #ffcf9f;");
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Active Reconnaissance | Network Scanning · Enumeration · Fingerprinting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 30% 10%, #0a0c14, #010101);
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 80, 40, 0.4);
+            padding-bottom: 2rem;
+        }
+
+        .active-badge {
+            display: inline-block;
+            background: rgba(255, 70, 30, 0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid #ff5e3a;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ff9a7a;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #ffaa77, #ff5e3a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbdff2;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .pillars {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: #111822;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-left: 2px solid #ff5e3a;
+        }
+
+        /* Grid Layout */
+        .recon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 90, 50, 0.35);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ff5e3a;
+            box-shadow: 0 20px 30px -12px rgba(255, 70, 0, 0.3);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card-header h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-content {
+            padding: 1.2rem 1.5rem 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+            margin: 0.8rem 0 1rem;
+        }
+
+        .topic-list li {
+            padding: 0.45rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: #e0edff;
+        }
+
+        .topic-list li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            color: #ff8a5e;
+            font-size: 0.75rem;
+        }
+
+        .tools-tag {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            border-top: 1px dashed rgba(255, 90, 50, 0.3);
+            padding-top: 1rem;
+        }
+
+        .tool {
+            background: #0f1722;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid #5e3a2e;
+            color: #ffcfb5;
+        }
+
+        .deep-section {
+            background: #0a111c;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-left: 5px solid #ff5e3a;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #1e1410;
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #ffb48a;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            background: linear-gradient(120deg, #ffd5b5, #ff8c64);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff5e3a, transparent);
+            margin: 1.2rem 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6f8fae;
+            border-top: 1px solid rgba(255, 90, 50, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .highlight {
+            color: #ffa06e;
+            font-weight: 500;
+        }
+
+        .scan-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+            background: #0e1622;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="active-badge">⚡ ACTIVE RECONNAISSANCE — NETWORK MAPPING</div>
+        <h1>Scanning · Enumeration · Fingerprinting</h1>
+        <p>Port scanning · Service versioning · OS detection · Vulnerability scanning · Network pivoting — proactive infrastructure mapping.</p>
+        <div class="pillars">
+            <span class="pill">📡 Port Scanning</span>
+            <span class="pill">🔍 Service Enumeration</span>
+            <span class="pill">🖥️ OS & Device Fingerprinting</span>
+            <span class="pill">⚠️ Vulnerability Scanning</span>
+            <span class="pill">🕸️ Network Topology Mapping</span>
+        </div>
+    </div>
+
+    <!-- Main Cards Grid -->
+    <div class="recon-grid">
+        <!-- Network & Port Scanning -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>📡</span> Network & Port Scanning</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>TCP SYN / Connect / UDP scans (Nmap, masscan)</li>
+                    <li>Stealth scanning techniques (FIN, NULL, Xmas)</li>
+                    <li>Idle/Zombie scans, fragmentation, decoy scans</li>
+                    <li>Large-scale scanning (masscan, zmap)</li>
+                    <li>Port knocking & firewall evasion</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Nmap</span>
+                    <span class="tool">masscan</span>
+                    <span class="tool">zmap</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service & Version Enumeration -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🔍</span> Service & Version Enumeration</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Service version detection (-sV), banner grabbing</li>
+                    <li>Aggressive OS & script scanning (-A, NSE scripts)</li>
+                    <li>RPC, NetBIOS, SNMP enumeration</li>
+                    <li>SSH, FTP, SMB, SMTP service fingerprinting</li>
+                    <li>IPv6 scanning & enumeration techniques</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Nmap NSE</span>
+                    <span class="tool">Netcat</span>
+                    <span class="tool">rpcinfo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vulnerability & Fuzzing Scanning -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>⚠️</span> Vulnerability Scanning</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Automated vulnerability assessment (Nessus, OpenVAS)</li>
+                    <li>Nmap vuln scripts (vulners, exploit, smb-vuln)</li>
+                    <li>Web app fuzzing (FFUF, Dirb, Gobuster)</li>
+                    <li>Network fuzzing protocols (SPIKE, boofuzz)</li>
+                    <li>CVE correlation & exploitability checks</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">Nessus</span>
+                    <span class="tool">OpenVAS</span>
+                    <span class="tool">FFUF</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- OS & Device Fingerprinting -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🖥️</span> OS & Device Fingerprinting</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>TCP/IP stack fingerprinting (-O in Nmap)</li>
+                    <li>TTL analysis & passive OS detection</li>
+                    <li>MAC OUI lookup, DHCP fingerprinting</li>
+                    <li>IoT & embedded device identification</li>
+                    <li>Honeypot detection techniques</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">p0f</span>
+                    <span class="tool">Nmap OS detection</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Topology & Route Mapping -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>🕸️</span> Network Topology Mapping</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Traceroute (ICMP, TCP, UDP) & path MTU discovery</li>
+                    <li>Network mapping with Nmap (--traceroute, -sn)</li>
+                    <li>Firewall & IDS/IPS detection (nmap --badsum, -f)</li>
+                    <li>Route enumeration & BGP looking glasses</li>
+                    <li>Visual network topology tools</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">traceroute</span>
+                    <span class="tool">mtr</span>
+                    <span class="tool">Zenmap</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wireless & Alternative Networks -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span>📶</span> Wireless & Alternative Networks</h2>
+            </div>
+            <div class="card-content">
+                <ul class="topic-list">
+                    <li>Wi-Fi network scanning (airodump-ng, Kismet)</li>
+                    <li>Bluetooth enumeration (bluetoothctl, btscanner)</li>
+                    <li>Zigbee, LoRa, SDR reconnaissance</li>
+                    <li>ARP & DHCP network discovery</li>
+                </ul>
+                <div class="tools-tag">
+                    <span class="tool">aircrack-ng</span>
+                    <span class="tool">Kismet</span>
+                    <span class="tool">BetterCAP</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive: Nmap Mastery & Scan Types -->
+    <div class="deep-section">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">🎯</span>
+            <span style="font-weight: 800; font-size: 1.4rem;">Nmap — The Active Reconnaissance Swiss Army Knife</span>
+        </div>
+        <div class="scan-flow" style="margin: 1rem 0;">
+            <span>🔹 SYN stealth (-sS)</span> <span>|</span> <span>🔹 UDP scanning (-sU)</span> <span>|</span>
+            <span>🔹 Version detection (-sV)</span> <span>|</span> <span>🔹 OS fingerprint (-O)</span> <span>|</span>
+            <span>🔹 Script engine (-sC, --script)</span> <span>|</span> <span>🔹 Timing templates (-T4)</span>
+        </div>
+        <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <span class="method-badge">nmap -sS -sV -O -T4 target</span>
+            <span class="method-badge">nmap -p- --min-rate 10000 target</span>
+            <span class="method-badge">nmap --script vuln target</span>
+            <span class="method-badge">nmap -sU --top-ports 20 target</span>
+        </div>
+        <div class="tools-tag" style="margin-top: 1rem;">
+            <span class="tool">Nmap NSE (330+ scripts)</span>
+            <span class="tool">Zenmap (GUI)</span>
+        </div>
+    </div>
+
+    <!-- Advanced Evasion & Firewall Testing -->
+    <div>
+        <span class="section-title">🛡️ Firewall Evasion & Stealth Techniques</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin: 1.2rem 0;">
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🔀 Decoy scans</strong>
+                <div style="font-size: 0.8rem;">nmap -D RND:10,ME target — hide real source IP</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">📦 Fragmentation</strong>
+                <div style="font-size: 0.8rem;">nmap -f (fragment packets) & --mtu to evade signature detection</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🎭 Spoofed scans</strong>
+                <div style="font-size: 0.8rem;">Idle scan (-sI zombie) — fully blind, hide origin</div>
+            </div>
+            <div style="background: #0e1624; border-radius: 1rem; padding: 1rem;">
+                <strong class="highlight">🐢 Timing & throttling</strong>
+                <div style="font-size: 0.8rem;">-T1 (paranoid) or -T2 to avoid IDS alert flooding</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vulnerability Scanning & Automation -->
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">⚠️ Vulnerability Scanner Workflow</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>→ Nessus: credentialed vs non-credentialed scan</li>
+                <li>→ OpenVAS: Greenbone community feed</li>
+                <li>→ Nmap vuln scripts: real-time CVE matching</li>
+                <li>→ Nuclei: template-based fast vulnerability scanning</li>
+                <li>→ Custom fuzzing: FFUF, Wfuzz for web parameters</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">Nessus Essentials</span>
+                <span class="tool">Nuclei</span>
+                <span class="tool">Metasploit auxiliary/scanner</span>
+            </div>
+        </div>
+        <div style="flex: 1; background: #0b111f; border-radius: 1.5rem; padding: 1.4rem;">
+            <span style="font-size: 1.4rem; font-weight: 700;">📊 Active Recon Automation</span>
+            <ul style="margin-top: 0.8rem; list-style: none;">
+                <li>🔹 AutoRecon — multi-phase automated enumeration</li>
+                <li>🔹 Sn1per — asset discovery + vulnerability scan</li>
+                <li>🔹 Legion — Nmap + Nikto + hydra wrapper</li>
+                <li>🔹 Reconnoitre — network scanning & report generator</li>
+            </ul>
+            <div class="tools-tag" style="margin-top: 1rem;">
+                <span class="tool">AutoRecon</span>
+                <span class="tool">Sn1per</span>
+                <span class="tool">Legion</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service-Specific Enumeration Deep Dive -->
+    <div class="deep-section" style="background: #0a131f;">
+        <h3 style="margin-bottom: 1rem;">🔐 Protocol-Specific Active Enumeration</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem;">
+            <div>
+                <span class="highlight">📁 SMB Enumeration</span>
+                <div style="font-size: 0.85rem;">smbclient, enum4linux, crackmapexec — shares, users, null sessions</div>
+            </div>
+            <div>
+                <span class="highlight">📧 SMTP</span>
+                <div style="font-size: 0.85rem">smtp-user-enum, VRFY, EXPN — user enumeration</div>
+            </div>
+            <div>
+                <span class="highlight">🌐 SNMP</span>
+                <div style="font-size: 0.85rem">snmpwalk, onesixtyone — community strings, system info</div>
+            </div>
+            <div>
+                <span class="highlight">📡 DNS Zone Transfer</span>
+                <div style="font-size: 0.85rem">dig axfr, dnsrecon — misconfigured DNS servers</div>
+            </div>
+        </div>
+        <hr>
+        <div><span class="tool">enum4linux</span> <span class="tool">crackmapexec</span> <span class="tool">snmp-check</span> <span class="tool">dnsrecon</span></div>
+    </div>
+
+    <!-- Active Recon + OSINT synergy note -->
+    <div style="margin: 2rem 0;">
+        <span class="section-title">🔄 Active + Passive Reconnaissance Synergy</span>
+        <div style="background: #0e1724; border-radius: 1.5rem; padding: 1.2rem; margin-top: 0.8rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+                <div><span class="method-badge">OSINT (passive) → targets, IP ranges, domains</span></div>
+                <div><span class="method-badge">Active scanning → live hosts, open ports, services</span></div>
+                <div><span class="method-badge">Vulnerability assessment → prioritization</span></div>
+                <div><span class="method-badge">Exploitation & post-exploitation</span></div>
+            </div>
+            <div class="tools-tag" style="margin-top: 1.2rem;">
+                <span class="tool">Recon-ng (passive) + Nmap (active)</span>
+                <span class="tool">Maltego + masscan</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legal & Ethical Active Scanning Warning -->
+    <div style="background: rgba(255, 80, 50, 0.12); border-radius: 1.5rem; padding: 1.3rem 1.8rem; margin: 2rem 0;">
+        <p style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 1.8rem;">⚠️</span>
+            <span><strong class="highlight">Authorization Required — Active Reconnaissance is NOISY</strong> — Port scanning, fuzzing, and vulnerability scanning can trigger IDS/IPS and violate terms of service. Only perform active recon on systems you own or have explicit written permission to test.</span>
+        </p>
+    </div>
+
+    <!-- Active Recon Tool Quick Reference -->
+    <div style="text-align: center; background: linear-gradient(145deg, #0a0f1a, #02070e); border-radius: 2rem; padding: 1.5rem; margin-top: 1rem;">
+        <span style="font-weight: 700;">⚡ Essential Active Recon Toolkit: Nmap · masscan · Nessus · FFUF · enum4linux · crackmapexec · AutoRecon</span>
+        <div style="font-size: 0.8rem; margin-top: 0.5rem;">Scan smarter · Fingerprint deeper · Always stay authorized</div>
+    </div>
+
+    <footer>
+        ⚡ ACTIVE RECONNAISSANCE — Network scanning, service enumeration, OS fingerprinting, vulnerability detection, topology mapping.<br>
+        Loud · Proactive · Critical for security assessments.
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("%c⚡ Active Reconnaissance Module Loaded", "color: #ff8a5e; font-size: 14px; font-weight: bold;");
+        console.log("%cPort scanning · Service enumeration · OS fingerprint · Vulnerability scanning", "color: #ffcfb5;");
+    })();
+</script>
+</body>
+</html>
